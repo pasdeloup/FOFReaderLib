@@ -29,7 +29,7 @@ FOFFile::FOFFile(const FOFFile& orig)
 FOFFile::~FOFFile()
 {
     if(this->_fortranFileMaster) { // Only delete if master
-     //   delete this->_fortranFile;
+        this->_fortranFile->close();
     }    
 }
 
