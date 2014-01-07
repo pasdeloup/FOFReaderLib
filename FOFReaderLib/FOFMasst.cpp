@@ -57,8 +57,6 @@ void FOFMasst::readMasstFile(std::string filename) // Open file and read masst
                 this->convert<int>(temp, 8, endianness)
             );
         
-        std::cout << "Read halo " << i << " mass=" << myHalo->mass() << std::endl;
-        
         this->_halos.push_back(myHalo);    
     }
 

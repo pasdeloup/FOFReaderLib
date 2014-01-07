@@ -1,8 +1,7 @@
 CC=icpc
 CFLAGS=-c -Wall -O3
 LDFLAGS=
-SOURCES=main.cpp \
-    FOFReaderLib/FOFCube.cpp \
+SOURCES= FOFReaderLib/FOFCube.cpp \
     FOFReaderLib/FOFFile.cpp \
     FOFReaderLib/FOFHalo.cpp \
     FOFReaderLib/FOFMasst.cpp \
@@ -10,15 +9,17 @@ SOURCES=main.cpp \
     FOFReaderLib/FOFParticles.cpp \
     FOFReaderLib/FOFStrct.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=FOFReader
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(SOURCES) FOFReader getBiggestHalo
 	
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+FOFReader: FOFReader.o $(OBJECTS) 
+	$(CC) $(LDFLAGS) $@.o $(OBJECTS) -o $@
+
+getBiggestHalo: getBiggestHalo.o $(OBJECTS) 
+	$(CC) $(LDFLAGS) $@.o $(OBJECTS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 	
 clean:
-	rm -rf *o $(EXECUTABLE)
+	rm -rf *o FOFReaderLib/*.o FOFReader getBiggestHalo
