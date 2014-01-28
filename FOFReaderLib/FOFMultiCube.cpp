@@ -48,7 +48,7 @@ void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
              addMultiCubeFile(files[i], false, false);  // Never read particles from a directory !
          }
     }    
-    else {       
+    else {
         int nCubes = 0;
         
         nCubes = this->openAndReadFirstInt();

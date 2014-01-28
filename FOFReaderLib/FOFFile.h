@@ -30,7 +30,8 @@
 class FOFFile
 {
 public:
-    FOFFile();   
+    FOFFile();
+    FOFFile(std::string filename);   
     FOFFile(const FOFFile& orig);
     virtual ~FOFFile();
     
@@ -46,6 +47,9 @@ public:
     
     // Check if string contains a value
     bool contains(const std::string &haystack, const std::string &needle);
+    
+    // Replace a value by another (masst by strct for instance)
+    void replaceAll(std::string& str, const std::string& from, const std::string& to);
     
     template<class T> T convert(std::vector<char> temp, int pos, bool endianness) {
         T value;        

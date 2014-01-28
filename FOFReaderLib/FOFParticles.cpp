@@ -16,6 +16,7 @@
 
 #include "FOFParticles.h"
 #include "FOFFile.h"
+#include "FOFCube.h"
 
 FOFParticles::FOFParticles()
 {
@@ -28,6 +29,16 @@ FOFParticles::FOFParticles(FortranFile<unsigned int> *fortranFile)
     this->_streampos = 0;
 }
 
+FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff position)
+{
+    this->_streampos = position;
+    this->_filename = filename;
+    this->_npart = npart;
+    
+    this->openAndReadFirstInt();    
+    this->readParticles();    
+}
+
 FOFParticles::FOFParticles(const FOFParticles& orig)
 {
 }
@@ -36,6 +47,10 @@ FOFParticles::~FOFParticles()
 {    
 }
 
+/**
+ * Read the particles
+ * @param readIds read or skip ids (faster to skip, not ever usefuls)
+ */
 void FOFParticles::readParticles(bool readIds)
 {
     int len = this->_npart;
@@ -69,8 +84,21 @@ void FOFParticles::readParticles(bool readIds)
     }
 }
 
+/**
+ * Get current stream position
+ */
 void FOFParticles::setStreampos()
 {
      this->_streampos = this->_fortranFile->readStream()->tellg();
      //std::cout << "Set pos to " << _streampos << std::endl;
+}
+
+/**
+ * Skip Particles by reading the 3 fiels
+ */
+void FOFParticles::skipParticles()
+{
+    this->_fortranFile->readIgnore();
+    this->_fortranFile->readIgnore();
+    this->_fortranFile->readIgnore();
 }

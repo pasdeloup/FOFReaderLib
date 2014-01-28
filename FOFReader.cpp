@@ -61,9 +61,10 @@ int main(int argc, char** argv)
          */
         case 1: 
         {
-            cout << "Reading strct " << argv[1] << endl;
+            cout << "Reading strct " << argv[1] << endl;            
             FOFStrct strct(argv[1], true);
-            for(int i=0; i<strct.nHalos(); i++) {
+            int maxHaloToDisplay = 5;
+            for(int i=0; i<maxHaloToDisplay; i++) {
                 cout << "HALO " << i << ": " 
                         << strct.halos(i)->npart() << " particles"                        
                         << endl;
@@ -72,6 +73,7 @@ int main(int argc, char** argv)
                         << endl;
                 }
             }            
+            cout << "TOTAL " << strct.nHalos() << " halos" << endl;
             break;
         }
         
@@ -82,13 +84,51 @@ int main(int argc, char** argv)
         {
             cout << "Reading masst " << argv[1] << endl;
             FOFMasst masst(argv[1]);
-            for(int i=0; i<masst.nHalos(); i++) {
+            int maxHaloToDisplay = 5;
+            for(int i=0; i<maxHaloToDisplay; i++) {
                 cout << "HALO " << i << ": " 
                         << "id:" << masst.halos(i)->id() << " "                        
                         << masst.halos(i)->mass() << " particles"                        
                         << " center: (" << masst.halos(i)->x() << "," << masst.halos(i)->y() << "," << masst.halos(i)->z() << ") "
                         << endl;
             }            
+             cout << "TOTAL " << masst.nHalos() << " halos" << endl;
+            break;
+        }
+        
+        /* 
+         * DEUS HALOS USAGE (masst + strct)
+         */
+        case 3: 
+        {
+            cout << "Reading Halo dir " << argv[1] << endl;
+            DEUSHalos simulation(argv[1]);
+            int maxHaloToDisplay = 5;
+            int randomHalo = 55442;
+            
+            for(int i=0; i<maxHaloToDisplay; i++) {
+                    cout << "  HALO " << i << ": "                             
+                            << simulation.halos(i)->mass() << " particles"                        
+                            << " center: (" 
+                                << simulation.halos(i)->x() << "," 
+                                << simulation.halos(i)->y() << "," 
+                                << simulation.halos(i)->z() << ") "
+                            << endl;            
+            }
+            cout << "TOTAL SIMULATION " << simulation.nFiles() << " files, " << simulation.nHalos() << " halos" << endl;
+            
+            cout << "RANDOM HALO = " << randomHalo << endl;
+            
+            simulation.loadParticles(randomHalo);            
+            FOFParticles *haloParticles = simulation.halos(randomHalo)->particles();
+            
+            for(int j=0; j<haloParticles->npart(); j++) {
+                cout << "   Particle " << j << ": "                            
+                            << "position: (" << haloParticles->posX(j) << "," << haloParticles->posY(j) << "," << haloParticles->posZ(j) << ") "
+                            << "velocity (" << haloParticles->velX(j) << "," << haloParticles->velY(j) << "," << haloParticles->velZ(j) << ")"
+                            << endl;
+            }
+            
             break;
         }
         
@@ -109,6 +149,7 @@ int main(int argc, char** argv)
                 "        0: FOF Cube/Multicube\r\n"
                 "        1: FOF Struct\r\n"
                 "        2: FOF Masst\r\n"
+                "        3: DEUS Halo directory (= masst + strct)\r\n"
                 << argc << endl;
         return 0;
     }

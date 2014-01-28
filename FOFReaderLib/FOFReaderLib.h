@@ -12,6 +12,7 @@
 #include "FOFMultiCube.h"
 #include "FOFStrct.h"
 #include "FOFMasst.h"
+#include "DEUSHalos.h"
 
 #endif	/* FOFREADERLIB_H */
 

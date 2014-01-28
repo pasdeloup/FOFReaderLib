@@ -22,7 +22,14 @@
 FOFFile::FOFFile()
 {
     this->_fortranFile = new FortranFile<unsigned int>;
-    this->_fortranFileMaster = true;
+    this->_fortranFileMaster = true;    
+}
+
+FOFFile::FOFFile(std::string filename)
+{
+    this->_fortranFile = new FortranFile<unsigned int>;
+    this->_fortranFileMaster = true;   
+    this->_filename = filename;
 }
 
 FOFFile::FOFFile(const FOFFile& orig)
@@ -96,4 +103,14 @@ bool FOFFile::contains(const std::string &haystack, const std::string &needle)
             return true;
     }
     return false;
+}
+
+void FOFFile::replaceAll(std::string& str, const std::string& from, const std::string& to) {
+    if(from.empty())
+        return;
+    size_t start_pos = 0;
+    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    }
 }

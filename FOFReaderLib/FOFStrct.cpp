@@ -24,10 +24,10 @@ FOFStrct::FOFStrct(const FOFStrct& orig)
 {
 }
 
-FOFStrct::FOFStrct(std::string filename, bool readIds)
+FOFStrct::FOFStrct(std::string filename, bool readIds, bool readParticles)
 {
     this->_filename = filename;
-    this->readStrctFile(readIds);    
+    this->readStrctFile(readIds, readParticles);    
 }
 
 FOFStrct::~FOFStrct()
@@ -37,21 +37,46 @@ FOFStrct::~FOFStrct()
 
 void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and read strct
 {    
-    this->_nHalos = this->openAndReadFirstInt();
-    
-    this->_halos.reserve(this->_nHalos);
-    for(int i=0; i<this->_nHalos; i++) {            
-        FOFParticles *myHalo = new FOFParticles(this->_fortranFile);
-        int npart;
-        this->_fortranFile->read(npart);
-        myHalo->npart(npart);
-        if(npart > 0) {
-            if(readParticles) {
-                myHalo->readParticles(readIds);
-            }            
-            this->_halos.push_back(myHalo);                    
-       }            
+    if(this->isDir()) {
+         std::vector<std::string> files;
+         bool res=this->getFilesFromDir("strct",&files);
+         for(int i=0; i<files.size();i++) {             
+             addStrctFile(files[i], false, false);  // Never read particles from a directory !
+         }
     }    
- 
+    else {
+        this->_nHalos = this->openAndReadFirstInt();
+
+        this->_halos.reserve(this->_nHalos);
+        for(int i=0; i<this->_nHalos; i++) {            
+            FOFParticles *myHalo = new FOFParticles(this->_fortranFile);
+            int npart;
+            this->_fortranFile->read(npart);
+            myHalo->npart(npart);
+            if(npart > 0) {
+                if(readParticles) {
+                    myHalo->readParticles(readIds);
+                }
+                else {
+                    myHalo->skipParticles();
+                }
+                this->_halos.push_back(myHalo);                    
+           }            
+        }     
+    }
+}
+
+// Open file and read cube (not multi)
+void FOFStrct::addStrctFile(std::string filename, bool readIds, bool readParticles)
+{   
+    std::cout << "Adding " << filename << std::endl;
+    FOFStrct *multi;
+    
+    multi = new FOFStrct(filename, readIds, readParticles);
+        
+    this->_halos.reserve(this->nHalos() + multi->nHalos());
+    for(int i=0; i<multi->nHalos(); i++) {
+        this->_halos.push_back(multi->halos(i));
+    }
 }
 

@@ -25,6 +25,8 @@ public:
     FOFParticles();
     FOFParticles(const FOFParticles& orig);
     FOFParticles(FortranFile<unsigned int> *_fortranFile);
+    FOFParticles(std::string filename,int npart, std::streamoff position);
+    
     virtual ~FOFParticles();
     
     // Getters
@@ -35,7 +37,7 @@ public:
     
     // Setter
     void npart(int npart) {this->_npart = npart;}    
-            
+                
     // Enhanced getters
     float posX(int i) {return _position[i * 3];}
     float posY(int i) {return _position[i * 3 + 1];}
@@ -51,6 +53,7 @@ public:
 // Reader    
     void setStreampos();
     void readParticles(bool readIds=false);
+    void skipParticles();
     
 protected:
     int _npart;    

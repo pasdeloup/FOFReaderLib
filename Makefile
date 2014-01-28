@@ -7,7 +7,9 @@ SOURCES= FOFReaderLib/FOFCube.cpp \
     FOFReaderLib/FOFMasst.cpp \
     FOFReaderLib/FOFMultiCube.cpp \
     FOFReaderLib/FOFParticles.cpp \
-    FOFReaderLib/FOFStrct.cpp
+    FOFReaderLib/FOFStrct.cpp \
+    FOFReaderLib/DEUSHalos.cpp \
+    FOFReaderLib/DEUSHalo.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: $(SOURCES) FOFReader getBiggestHalo

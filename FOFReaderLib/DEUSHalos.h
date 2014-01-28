@@ -1,47 +1,47 @@
 /* ********************************** CELL ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
 // PROJECT :        DEUS_SERVER
-// TITLE :          FOFMasst
+// TITLE :          DEUSHalos
 // DESCRIPTION :    Mesh cells integrating particles
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
-/// \file           FOFMasst.h
+/// \file           DEUSHalos.h
 /// \brief          Mesh cells integrating particles
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#ifndef FOFMASST_H
-#define	FOFMASST_H
+#ifndef DEUSHALOS_H
+#define	DEUSHALOS_H
 
+#include "FOFStrct.h"
+#include "FOFMasst.h"
 #include "FOFFile.h"
-#include "FOFHalo.h"
+#include "DEUSHalo.h"
 
-class FOFMasst : protected FOFFile
-{
+class DEUSHalos {
 public:
-    FOFMasst();
-    FOFMasst(const FOFMasst& orig);
-    FOFMasst(std::string filename);
-    virtual ~FOFMasst();
-        
-    // Getters
-    int nHalos() {return _nHalos;}
-    std::vector<FOFHalo*> halos() {return _halos;}
-    FOFHalo* halos(int i) {return _halos[i];}
+    DEUSHalos(std::string directory);
+    DEUSHalos(const DEUSHalos& orig);
+    virtual ~DEUSHalos();
     
-    // Reader   
-    void readMasstFile(); // Open file and read strct
-    void addMasstFile(std::string filename); // add file and read masst
+    DEUSHalo *halos(int i) {return _halos[i];}
+    std::string filename(int i) {return _masstFilename[i];}
+    long long nHalos() {return _halos.size();}
+    int nFiles() {return _masstFilename.size();}
+    void loadParticles(int i);
     
 private:
-    int _nHalos;
-    std::vector<FOFHalo*> _halos;
+    void loadMasst();    
+    
+    FOFFile *_directory;
+    std::vector<DEUSHalo*> _halos;
+    std::vector<std::string> _masstFilename;
 
 };
 
-#endif	/* FOFMASST_H */
+#endif	/* DEUSHALOS_H */
 

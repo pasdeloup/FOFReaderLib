@@ -1,0 +1,6 @@
+*.o
+*.so
+nbproject/
+FOFReader
+.dep.inc
+getBiggestHalo

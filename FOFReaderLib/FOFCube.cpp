@@ -66,9 +66,7 @@ void FOFCube::readCube(bool skipNpart, bool readIds, bool readParticles)
         this->readParticles(readIds);
     }
     else { // Else ignore to go to next cube
-        this->_fortranFile->readIgnore();
-        this->_fortranFile->readIgnore();
-        this->_fortranFile->readIgnore();
+        this->skipParticles();
     }
 }
 
