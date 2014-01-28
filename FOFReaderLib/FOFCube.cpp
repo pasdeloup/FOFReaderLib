@@ -25,14 +25,17 @@ FOFCube::FOFCube() : _boundaries(0)
 {
 }
 
-FOFCube::FOFCube(std::string filename, bool readIds)
+FOFCube::FOFCube(std::string filename, bool readIds, bool readParticles)
 {
-    this->readCubeFile(filename, readIds);
+    this->_streampos = 0;
+    this->_filename = filename;
+    this->readCubeFile(readIds, readParticles);
 }
 
 FOFCube::FOFCube(FortranFile<unsigned int> *fortranFile)
 {
-    this->_fortranFile = fortranFile;            
+    this->_fortranFile = fortranFile; 
+    this->_streampos = 0;
 }
 
 FOFCube::FOFCube(const FOFCube& orig)
@@ -45,7 +48,7 @@ FOFCube::~FOFCube()
 }
 
 // Read cube from already opened file (can use external FortranFile for multicube reading)
-void FOFCube::readCube(bool skipNpart, bool readIds)
+void FOFCube::readCube(bool skipNpart, bool readIds, bool readParticles)
 {
     unsigned int len = 0;
     
@@ -58,16 +61,23 @@ void FOFCube::readCube(bool skipNpart, bool readIds)
     this->_boundaries = new float[6];
     this->_fortranFile->readArray<float>(this->_boundaries, len); // min/max
     assert(len == 6);
-    
-    this->readParticles(this->_npart, readIds);
+    this->setStreampos();
+    if(readParticles) {
+        this->readParticles(readIds);
+    }
+    else { // Else ignore to go to next cube
+        this->_fortranFile->readIgnore();
+        this->_fortranFile->readIgnore();
+        this->_fortranFile->readIgnore();
+    }
 }
 
 // Open file and read cube (not multi)
-void FOFCube::readCubeFile(std::string filename, bool readIds)
-{   
-    this->_npart = this->openAndReadFirstInt(filename);
+void FOFCube::readCubeFile(bool readIds, bool readParticles)
+{       
+    this->_npart = this->openAndReadFirstInt();
     if(npart() < 0) {
         throw std::ios_base::failure("ERROR : FOFCube multicube format");
     }
-    this->readCube(true, readIds);
+    this->readCube(true, readIds, readParticles);
 }

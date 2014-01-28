@@ -23,9 +23,10 @@ FOFMultiCube::FOFMultiCube()
 {
 }
 
-FOFMultiCube::FOFMultiCube(std::string filename, bool readIds)
-{
-    this->readMultiCubeFile(filename, readIds);
+FOFMultiCube::FOFMultiCube(std::string filename, bool readIds, bool readParticles)
+{ 
+    this->_filename = filename;
+    this->readMultiCubeFile(readIds, readParticles);
 }
 
 FOFMultiCube::FOFMultiCube(const FOFMultiCube& orig)
@@ -38,35 +39,70 @@ FOFMultiCube::~FOFMultiCube()
 }
 
 // Open file and read cube (not multi)
-void FOFMultiCube::readMultiCubeFile(std::string filename, bool readIds)
+void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
 {   
-    int nCubes = 0;
-    nCubes = this->openAndReadFirstInt(filename);
-    
-    if(nCubes > 0) { // Not a multicube file
-        this->_cubes.reserve(1);
-        FOFCube *myCube = new FOFCube(this->_fortranFile);
-        myCube->npart(nCubes);
-        myCube->readCube(true, readIds);
-        this->_cubes.push_back(myCube);
-    }
-    else {
-        nCubes = -nCubes;        
-        this->_cubes.reserve(nCubes);
-        for(int i=0; i<nCubes; i++) {            
+    if(this->isDir()) {
+         std::vector<std::string> files;
+         bool res=this->getFilesFromDir("cube",&files);
+         for(int i=0; i<files.size();i++) {             
+             addMultiCubeFile(files[i], false, false);  // Never read particles from a directory !
+         }
+    }    
+    else {       
+        int nCubes = 0;
+        
+        nCubes = this->openAndReadFirstInt();
+                
+        if(nCubes > 0) { // Not a multicube file
+            this->_cubes.reserve(this->nCubes() + 1);
             FOFCube *myCube = new FOFCube(this->_fortranFile);
-            myCube->readCube(false, readIds);
-            
-            if(myCube->npart() > 0) {
-                this->_cubes.push_back(myCube);                    
-           }            
-        }    
+            myCube->npart(nCubes);
+            myCube->readCube(true, readIds, readParticles);
+            this->_cubes.push_back(myCube);
+        }
+        else {
+            // Remember offset of first cube
+            std::streamoff firstCubeOffset = this->_fortranFile->readStream()->tellg();            
+            // Get file size
+            this->_fortranFile->readStream()->seekg (0, this->_fortranFile->readStream()->end);            
+            std::streamoff endFileOffset = this->_fortranFile->readStream()->tellg();
+            // Go back to first cube
+            this->_fortranFile->readStream()->seekg (firstCubeOffset);
+                        
+            std::cout << "Multicube" << std::endl;
+                 
+            int i=0;
+            while(this->_fortranFile->readStream()->tellg() < endFileOffset) {
+                std::cout << "Reading cube " << i << std::endl;
+                FOFCube *myCube = new FOFCube(this->_fortranFile);
+                myCube->readCube(false, readIds, readParticles);            
+                if(myCube->npart() > 0) {
+                    this->_cubes.push_back(myCube);
+               }            
+               i++;               
+            }    
+        }   
     }    
 }
 
-int FOFMultiCube::npart()
+// Open file and read cube (not multi)
+void FOFMultiCube::addMultiCubeFile(std::string filename, bool readIds, bool readParticles)
+{   
+    std::cout << "Adding " << filename << std::endl;
+    FOFMultiCube *multi;
+    
+    multi = new FOFMultiCube(filename, readIds, readParticles);
+    
+    this->_cubes.reserve(this->nCubes() + multi->nCubes());
+    for(int i=0; i<multi->nCubes(); i++) {
+        this->_cubes.push_back(multi->cubes(i));
+    }
+}
+
+
+long FOFMultiCube::npart()
 {
-    int npart=0;
+    long npart=0;
     for(int i=0; i< this->nCubes(); i++) {
         npart += this->cubes(i)->npart();
     }

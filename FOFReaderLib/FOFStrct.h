@@ -36,7 +36,7 @@ public:
     FOFParticles* halos(int i) {return _halos[i];}
     
     // Reader   
-    void readStrctFile(std::string filename, bool readIds=false); // Open file and read strct
+    void readStrctFile(bool readIds=false, bool readParticles=true); // Open file and read strct
     
 protected:
     int _nHalos;

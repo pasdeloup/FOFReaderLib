@@ -26,7 +26,8 @@ FOFStrct::FOFStrct(const FOFStrct& orig)
 
 FOFStrct::FOFStrct(std::string filename, bool readIds)
 {
-    this->readStrctFile(filename, readIds);
+    this->_filename = filename;
+    this->readStrctFile(readIds);    
 }
 
 FOFStrct::~FOFStrct()
@@ -34,18 +35,20 @@ FOFStrct::~FOFStrct()
     while(!this->_halos.empty()) delete this->_halos.back(), this->_halos.pop_back();        
 }
 
-void FOFStrct::readStrctFile(std::string filename, bool readIds) // Open file and read strct
+void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and read strct
 {    
-    this->_nHalos = this->openAndReadFirstInt(filename);
+    this->_nHalos = this->openAndReadFirstInt();
     
     this->_halos.reserve(this->_nHalos);
     for(int i=0; i<this->_nHalos; i++) {            
         FOFParticles *myHalo = new FOFParticles(this->_fortranFile);
         int npart;
         this->_fortranFile->read(npart);
-        myHalo->npart(npart);        
+        myHalo->npart(npart);
         if(npart > 0) {
-            myHalo->readParticles(npart, readIds);
+            if(readParticles) {
+                myHalo->readParticles(readIds);
+            }            
             this->_halos.push_back(myHalo);                    
        }            
     }    

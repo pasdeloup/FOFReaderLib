@@ -60,8 +60,8 @@ template<class TM> class FortranFile
     
     // Stream
     public:
-        inline std::ifstream* readStream() const;
-        inline std::ofstream* writeStream() const;
+        inline std::ifstream* readStream();
+        inline std::ofstream* writeStream();
         inline bool openRead(const std::string &path);
         inline bool openWrite(const std::string &path);
         inline void close();
@@ -207,17 +207,17 @@ template<class TM> inline unsigned int FortranFile<TM>::markerSize() const
 // Get the read stream
 /// \brief          Get the read stream
 /// \return         Pointer to the read stream
-template<class TM> inline std::ifstream* FortranFile<TM>::readStream() const
+template<class TM> inline std::ifstream* FortranFile<TM>::readStream()
 {
-    return ((writeStream.is_open()) ? (NULL) : (&_readStream));
+    return ((_writeStream.is_open()) ? (NULL) : (&_readStream));
 }
 
 // Get the write stream
 /// \brief          Get the write stream
 /// \return         Pointer to the write stream
-template<class TM> inline std::ofstream* FortranFile<TM>::writeStream() const
+template<class TM> inline std::ofstream* FortranFile<TM>::writeStream()
 {   
-    return ((readStream.is_open()) ? (NULL) : (&_writeStream));
+    return ((_readStream.is_open()) ? (NULL) : (&_writeStream));
 }
 
 // Open a binary fortran file for reading

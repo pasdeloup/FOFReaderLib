@@ -34,7 +34,7 @@ public:
     FOFHalo* halos(int i) {return _halos[i];}
     
     // Reader   
-    void readMasstFile(std::string filename); // Open file and read strct
+    void readMasstFile(); // Open file and read strct
     
 private:
     int _nHalos;

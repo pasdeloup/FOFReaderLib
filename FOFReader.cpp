@@ -25,24 +25,29 @@ int main(int argc, char** argv)
             cout << "Reading multicube " << argv[1] << endl;
             
             int maxParticleToDisplay = 5;
+            int maxDetailCubeToDisplay = 3;
             
-            FOFMultiCube multi(argv[1], true);
+            FOFMultiCube multi(argv[1], false, false); // don't use default, don't read particles just header
             for(int i=0; i<multi.nCubes(); i++) {
                 cout << "Cube " << i << ": " 
                         << multi.cubes(i)->npart() << " particles, "
                         << "area: (" << multi.cubes(i)->minX() << "," << multi.cubes(i)->minY() << "," << multi.cubes(i)->minZ() << ") "
                         << "to (" << multi.cubes(i)->maxX() << "," << multi.cubes(i)->maxY() << "," << multi.cubes(i)->maxZ() << ")"
                         << endl;
-                for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {
-                    cout << "   Particle " << j << ": "
-                        << "id: " << multi.cubes(i)->id(j) << " "
-                        << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
-                        << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
-                        << endl;
-                }  
-                if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
-                        cout << "   (...) " << endl;
-                }                
+                if(i < maxDetailCubeToDisplay) {
+                    multi.cubes(i)->readParticles(true);
+                    for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
+                        cout << "   Particle " << j << ": "
+                            << "id: " << multi.cubes(i)->id(j) << " "
+                            << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
+                            << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
+                            << endl;
+                    }  
+                    if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
+                            cout << "   (...) " << endl;
+                    }      
+                }
+                          
             }
             cout << "TOTAL " << multi.npart() << " particles, " 
                         << "area: (" << multi.minX() << "," << multi.minY() << "," << multi.minZ() << ") "
@@ -57,11 +62,15 @@ int main(int argc, char** argv)
         case 1: 
         {
             cout << "Reading strct " << argv[1] << endl;
-            FOFStrct strct(argv[1]);
+            FOFStrct strct(argv[1], true);
             for(int i=0; i<strct.nHalos(); i++) {
                 cout << "HALO " << i << ": " 
                         << strct.halos(i)->npart() << " particles"                        
                         << endl;
+                if(i==0) {
+                    cout << "1st part of 1st halo: ID=" << strct.halos(i)->id(0)
+                        << endl;
+                }
             }            
             break;
         }

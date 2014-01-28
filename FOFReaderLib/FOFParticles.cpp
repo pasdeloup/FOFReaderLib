@@ -25,6 +25,7 @@ FOFParticles::FOFParticles(FortranFile<unsigned int> *fortranFile)
 {
     this->_fortranFile = fortranFile;
     this->_fortranFileMaster = false;
+    this->_streampos = 0;
 }
 
 FOFParticles::FOFParticles(const FOFParticles& orig)
@@ -35,8 +36,15 @@ FOFParticles::~FOFParticles()
 {    
 }
 
-void FOFParticles::readParticles(int len, bool readIds)
+void FOFParticles::readParticles(bool readIds)
 {
+    int len = this->_npart;
+    
+    if(this->_streampos > 0) {
+        //std::cout << "Seeking to " << _streampos << std::endl;
+        this->_fortranFile->readStream()->seekg(this->_streampos);
+    }
+    
     this->_position.reserve(len * 3);
     this->_fortranFile->readVector(this->_position, false);
     if (this->_position.size() != len * 3) {
@@ -59,4 +67,10 @@ void FOFParticles::readParticles(int len, bool readIds)
     else {
             this->_fortranFile->readIgnore();
     }
+}
+
+void FOFParticles::setStreampos()
+{
+     this->_streampos = this->_fortranFile->readStream()->tellg();
+     //std::cout << "Set pos to " << _streampos << std::endl;
 }

@@ -27,7 +27,8 @@ FOFMasst::FOFMasst(const FOFMasst& orig)
 
 FOFMasst::FOFMasst(std::string filename)
 {
-    this->readMasstFile(filename);
+    this->_filename = filename;
+    this->readMasstFile();
 }
 
 FOFMasst::~FOFMasst()
@@ -35,10 +36,10 @@ FOFMasst::~FOFMasst()
     while (!this->_halos.empty()) delete this->_halos.back(), this->_halos.pop_back();
 }
 
-void FOFMasst::readMasstFile(std::string filename) // Open file and read masst
+void FOFMasst::readMasstFile() // Open file and read masst
 {
     bool endianness;
-    this->_nHalos = this->openAndReadFirstInt(filename);
+    this->_nHalos = this->openAndReadFirstInt();
     
     // Get endianess
     endianness = this->_fortranFile->endianness();
