@@ -52,8 +52,9 @@ public:
     
 // Reader    
     void setStreampos();
-    void readParticles(bool readIds=false);
+    void readParticles(bool readIds=false); // Read particles
     void skipParticles();
+    void releaseParticles(); // Remove particles to free memory
     
 protected:
     int _npart;    

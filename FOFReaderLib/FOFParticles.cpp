@@ -100,6 +100,17 @@ void FOFParticles::readParticles(bool readIds)
 }
 
 /**
+ * Release particles to free memory (need to re-read if needed again)
+ */
+void FOFParticles::releaseParticles()
+{
+    this->_position.clear();
+    this->_velocity.clear();
+    this->_id.clear();
+}
+
+
+/**
  * Get current stream position
  */
 void FOFParticles::setStreampos()

@@ -24,7 +24,7 @@ int main(int argc, char** argv)
             cout << "Reading multicube " << argv[1] << endl;
             
             int maxParticleToDisplay = 5;
-            int maxDetailCubeToDisplay = 3;
+            int maxDetailCubeToDisplay = 2;
             
             FOFMultiCube multi(argv[1], false, false); // don't use default, don't read particles just header
             for(int i=0; i<multi.nCubes(); i++) {
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
                         << "to (" << multi.cubes(i)->maxX() << "," << multi.cubes(i)->maxY() << "," << multi.cubes(i)->maxZ() << ")"
                         << endl;
                 if(i < maxDetailCubeToDisplay) {
-                    multi.cubes(i)->readParticles(true);
+                    multi.cubes(i)->readParticles(true); // Need to read particles
                     for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
                         cout << "   Particle " << j << ": "
                             << "id: " << multi.cubes(i)->id(j) << " "
@@ -44,7 +44,21 @@ int main(int argc, char** argv)
                     }  
                     if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
                             cout << "   (...) " << endl;
-                    }      
+                    }
+                    multi.cubes(i)->releaseParticles(); // Now we can release to free memory
+                    
+                    //multi.cubes(i)->readParticles(true);
+                    for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
+                        cout << "   Particle " << j << ": "
+                            << "id: " << multi.cubes(i)->id(j) << " "
+                            << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
+                            << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
+                            << endl;
+                    }  
+                    if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
+                            cout << "   (...) " << endl;
+                    }
+                    
                 }
                           
             }
