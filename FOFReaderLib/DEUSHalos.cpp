@@ -64,17 +64,22 @@ void DEUSHalos::loadMasst()
 /*
  * Load particles for halo i
  */
-void DEUSHalos::loadParticles(int i)
+void DEUSHalos::loadParticles(int i, int mode)
 {
     //1- Get the right filename
     std::string filename = this->_masstFilename[this->halos(i)->fileindex()];    
     this->_directory->replaceAll(filename, "masst", "strct");
         
     //2- Load the particle from this file according to halos datas
-    FOFParticles *loadedParticles = new FOFParticles(filename,this->halos(i)->mass(), this->halos(i)->haloindex());
+    FOFParticles *loadedParticles = new FOFParticles(filename,this->halos(i)->mass(), this->halos(i)->haloindex(), mode);
         
     this->halos(i)->particles(loadedParticles);
-    
-    delete loadedParticles;
+        
+}
+
+
+void DEUSHalos::releaseParticles(int i)
+{
+    this->halos(i)->particles()->releaseParticles();
 }
 

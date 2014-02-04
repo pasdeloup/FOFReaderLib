@@ -32,7 +32,8 @@ public:
     std::string filename(int i) {return _masstFilename[i];}
     long long nHalos() {return _halos.size();}
     int nFiles() {return _masstFilename.size();}
-    void loadParticles(int i);
+    void loadParticles(int i, int mode = FOFParticles::READ_POS|FOFParticles::READ_VEL);    
+    void releaseParticles(int i);
     
 private:
     void loadMasst();    

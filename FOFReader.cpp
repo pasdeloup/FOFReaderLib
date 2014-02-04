@@ -34,7 +34,7 @@ int main(int argc, char** argv)
                         << "to (" << multi.cubes(i)->maxX() << "," << multi.cubes(i)->maxY() << "," << multi.cubes(i)->maxZ() << ")"
                         << endl;
                 if(i < maxDetailCubeToDisplay) {
-                    multi.cubes(i)->readParticles(true); // Need to read particles
+                    multi.cubes(i)->readParticles(FOFParticles::READ_ALL); // Need to read particles
                     for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
                         cout << "   Particle " << j << ": "
                             << "id: " << multi.cubes(i)->id(j) << " "
@@ -132,11 +132,12 @@ int main(int argc, char** argv)
             
             cout << "RANDOM HALO : " << randomHalo << endl;
                        
-            simulation.loadParticles(randomHalo);
+            simulation.loadParticles(randomHalo, FOFParticles::READ_ALL);
             FOFParticles *haloParticles = simulation.halos(randomHalo)->particles();
             
             for(int j=0; j<haloParticles->npart(); j++) {
-                cout << "   Particle " << j << ": "                            
+                cout << "   Particle " << j << ": "               
+                            << "id: (" << haloParticles->id(j) << ") "
                             << "position: (" << haloParticles->posX(j) << "," << haloParticles->posY(j) << "," << haloParticles->posZ(j) << ") "
                             << "velocity (" << haloParticles->velX(j) << "," << haloParticles->velY(j) << "," << haloParticles->velZ(j) << ")"
                             << endl;

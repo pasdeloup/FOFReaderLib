@@ -29,13 +29,20 @@ FOFParticles::FOFParticles(FortranFile<unsigned int> *fortranFile)
     this->_streampos = 0;
 }
 
-FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff position)
+/**
+ * Constructeur
+ * @param filename
+ * @param npart
+ * @param position
+ * @param mode 0=Both 1=Don't read Ids -1=Ids Only
+ */
+FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff position, int mode)
 {
     this->_streampos = position;
     this->_filename = filename;
     this->_npart = npart;
-        
-    this->readParticles();    
+    
+    this->readParticles(mode);    
 }
 
 FOFParticles::FOFParticles(const FOFParticles& orig)
@@ -50,7 +57,7 @@ FOFParticles::~FOFParticles()
  * Read the particles
  * @param readIds read or skip ids (faster to skip, not ever usefuls)
  */
-void FOFParticles::readParticles(bool readIds)
+void FOFParticles::readParticles(int mode)
 {
     int len = this->_npart;
 #ifdef DEBUG_FOF    
@@ -71,21 +78,31 @@ void FOFParticles::readParticles(bool readIds)
         this->_fortranFile->readStream()->seekg(this->_streampos);
     }
     
-    this->_position.reserve(len * 3);
-    //std::cout << "Reading position " << _streampos << std::endl;
-    this->_fortranFile->readVector(this->_position, false);
-    //std::cout << "Reading OK " << std::endl;
-    if (this->_position.size() != len * 3) {
-        throw std::ios_base::failure("ERROR : FOFParticles read position len");
+    if(mode & READ_POS) {
+        this->_position.reserve(len * 3);
+        //std::cout << "Reading position " << _streampos << std::endl;
+        this->_fortranFile->readVector(this->_position, false);
+        //std::cout << "Reading OK " << std::endl;
+        if (this->_position.size() != len * 3) {
+            throw std::ios_base::failure("ERROR : FOFParticles read position len");
+        }
+    }
+    else {
+        this->_fortranFile->readIgnore();
+    }
+    
+    if(mode & READ_VEL) {
+        this->_velocity.reserve(len * 3);
+        this->_fortranFile->readVector(this->_velocity, false);
+        if (this->_velocity.size() != len * 3) {
+            throw std::ios_base::failure("ERROR : FOFParticles read velocity len");
+        }
+    }
+    else {
+        this->_fortranFile->readIgnore();
     }
 
-    this->_velocity.reserve(len * 3);
-    this->_fortranFile->readVector(this->_velocity, false);
-    if (this->_velocity.size() != len * 3) {
-        throw std::ios_base::failure("ERROR : FOFParticles read velocity len");
-    }
-
-    if(readIds) {
+    if(mode & READ_IDS) {
         this->_id.reserve(len);
         this->_fortranFile->readVector(this->_id, false);
         if (this->_id.size() != len) {

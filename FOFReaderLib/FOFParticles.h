@@ -25,9 +25,14 @@ public:
     FOFParticles();
     FOFParticles(const FOFParticles& orig);
     FOFParticles(FortranFile<unsigned int> *_fortranFile);
-    FOFParticles(std::string filename,int npart, std::streamoff position);
+    FOFParticles(std::string filename,int npart, std::streamoff position, int mode);
     
     virtual ~FOFParticles();
+    
+    const static int READ_POS = 1;
+    const static int READ_VEL = 2;
+    const static int READ_IDS = 4;
+    const static int READ_ALL = READ_POS | READ_VEL | READ_IDS;
     
     // Getters
     int npart() {return _npart;}    
@@ -52,7 +57,7 @@ public:
     
 // Reader    
     void setStreampos();
-    void readParticles(bool readIds=false); // Read particles
+    void readParticles(int mode = READ_POS | READ_VEL); // Read particles    
     void skipParticles();
     void releaseParticles(); // Remove particles to free memory
     
