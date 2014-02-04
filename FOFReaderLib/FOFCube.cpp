@@ -35,7 +35,8 @@ FOFCube::FOFCube(std::string filename, bool readIds, bool readParticles)
 FOFCube::FOFCube(FortranFile<unsigned int> *fortranFile)
 {
     this->_fortranFile = fortranFile; 
-    this->_streampos = 0;
+    this->_filename = fortranFile->name();
+    this->_streampos = fortranFile->readStream()->tellg();
 }
 
 FOFCube::FOFCube(const FOFCube& orig)
@@ -78,4 +79,5 @@ void FOFCube::readCubeFile(bool readIds, bool readParticles)
         throw std::ios_base::failure("ERROR : FOFCube multicube format");
     }
     this->readCube(true, readIds, readParticles);
+    this->close();
 }

@@ -34,8 +34,7 @@ FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff posit
     this->_streampos = position;
     this->_filename = filename;
     this->_npart = npart;
-    
-    this->openAndReadFirstInt();    
+        
     this->readParticles();    
 }
 
@@ -44,7 +43,7 @@ FOFParticles::FOFParticles(const FOFParticles& orig)
 }
 
 FOFParticles::~FOFParticles()
-{    
+{   
 }
 
 /**
@@ -54,14 +53,28 @@ FOFParticles::~FOFParticles()
 void FOFParticles::readParticles(bool readIds)
 {
     int len = this->_npart;
+#ifdef DEBUG_FOF    
+    std::cout << "Len = " << len << std::endl;
+#endif
+    
+    if(!this->_fortranFile->readStream()->is_open()) {
+#ifdef DEBUG_FOF    
+    std::cout << "Reopen " << this->_filename << std::endl;
+#endif        
+        this->_fortranFile->openRead(this->_filename);
+    }
     
     if(this->_streampos > 0) {
-        //std::cout << "Seeking to " << _streampos << std::endl;
+#ifdef DEBUG_FOF        
+        std::cout << "Seeking to " << _streampos << std::endl;
+#endif
         this->_fortranFile->readStream()->seekg(this->_streampos);
     }
     
     this->_position.reserve(len * 3);
+    //std::cout << "Reading position " << _streampos << std::endl;
     this->_fortranFile->readVector(this->_position, false);
+    //std::cout << "Reading OK " << std::endl;
     if (this->_position.size() != len * 3) {
         throw std::ios_base::failure("ERROR : FOFParticles read position len");
     }
@@ -80,8 +93,10 @@ void FOFParticles::readParticles(bool readIds)
         }
     }
     else {
-            this->_fortranFile->readIgnore();
+         this->_fortranFile->readIgnore();
     }
+    
+    this->_fortranFile->close();
 }
 
 /**

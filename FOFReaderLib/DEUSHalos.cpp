@@ -52,6 +52,7 @@ void DEUSHalos::loadMasst()
                  index += 36 + 32* masst->halos(j)->mass();// 3*2*4 + mass * 6*4+8 = 24 + mass * 36
                  _halos.push_back(halo);
              }
+             delete masst;
          }
     }    
     else {
@@ -68,10 +69,12 @@ void DEUSHalos::loadParticles(int i)
     //1- Get the right filename
     std::string filename = this->_masstFilename[this->halos(i)->fileindex()];    
     this->_directory->replaceAll(filename, "masst", "strct");
-    
+        
     //2- Load the particle from this file according to halos datas
     FOFParticles *loadedParticles = new FOFParticles(filename,this->halos(i)->mass(), this->halos(i)->haloindex());
         
     this->halos(i)->particles(loadedParticles);
+    
+    delete loadedParticles;
 }
 

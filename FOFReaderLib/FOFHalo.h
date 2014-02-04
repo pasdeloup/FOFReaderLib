@@ -27,7 +27,7 @@ public:
     float x() {return _x;}
     float y() {return _y;}
     float z() {return _z;}
-    float mass() {return _mass;}
+    int mass() {return _mass;}
     
 private:
     long long _id;

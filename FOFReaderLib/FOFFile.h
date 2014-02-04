@@ -30,6 +30,7 @@
 class FOFFile
 {
 public:
+        
     FOFFile();
     FOFFile(std::string filename);   
     FOFFile(const FOFFile& orig);
@@ -38,6 +39,8 @@ public:
     // Open the file for reading and get the first int to check endianess    
     int openAndReadFirstInt(std::string filename, FortranFile<unsigned int> * fortranFile);
     int openAndReadFirstInt();
+    
+    void close() {this->_fortranFile->close();}
     
     // Check if current file is a dir or a real file
     bool isDir();

@@ -29,7 +29,7 @@ FOFFile::FOFFile(std::string filename)
 {
     this->_fortranFile = new FortranFile<unsigned int>;
     this->_fortranFileMaster = true;   
-    this->_filename = filename;
+    this->_filename = filename;    
 }
 
 FOFFile::FOFFile(const FOFFile& orig)
@@ -39,12 +39,12 @@ FOFFile::FOFFile(const FOFFile& orig)
 FOFFile::~FOFFile()
 {
     if(this->_fortranFileMaster) { // Only delete if master
-        this->_fortranFile->close();
+        this->_fortranFile->close();                
     }    
 }
 
 int FOFFile::openAndReadFirstInt() 
-{        
+{   
     return this->openAndReadFirstInt(this->_filename, this->_fortranFile);
 }
 

@@ -68,12 +68,16 @@ void FOFMasst::readMasstFile() // Open file and read masst
 
             this->_halos.push_back(myHalo);    
         }
+        
+        this->_fortranFile->close();
     }
 }
 
 void FOFMasst::addMasstFile(std::string filename) // Open file and read masst
 {
+#ifdef DEBUG_FOF    
     std::cout << "Adding " << filename << std::endl;
+#endif
     FOFMasst *multi;
     
     multi = new FOFMasst(filename);
@@ -82,7 +86,7 @@ void FOFMasst::addMasstFile(std::string filename) // Open file and read masst
     for(int i=0; i<multi->nHalos(); i++) {
         this->_halos.push_back(multi->halos(i));
     }
-    this->_nHalos = this->_halos.size();
+    this->_nHalos = this->_halos.size();    
 }
 
 

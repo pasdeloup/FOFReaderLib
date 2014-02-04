@@ -30,8 +30,8 @@ public:
     float y() {return _y;}
     float z() {return _z;}
     float mass() {return _mass;}
-    float fileindex() {return _fileindex;}
-    float haloindex() {return _haloindex;}
+    int fileindex() {return _fileindex;}
+    int haloindex() {return _haloindex;}
     FOFParticles *particles(){return _particles;}
     void particles(FOFParticles *particles){_particles = particles;}
     

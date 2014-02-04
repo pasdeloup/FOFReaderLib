@@ -15,8 +15,7 @@ int main(int argc, char** argv)
 {    
     if (argc == 3) { // If correct number of args
         
-        switch (atoi(argv[2])) {
-        
+        switch (atoi(argv[2])) {            
         /* 
          * MULTI CUBE USAGE
          */
@@ -63,7 +62,7 @@ int main(int argc, char** argv)
         {
             cout << "Reading strct " << argv[1] << endl;            
             FOFStrct strct(argv[1], true);
-            int maxHaloToDisplay = 5;
+            int maxHaloToDisplay = strct.nHalos();//5;
             for(int i=0; i<maxHaloToDisplay; i++) {
                 cout << "HALO " << i << ": " 
                         << strct.halos(i)->npart() << " particles"                        
@@ -104,7 +103,7 @@ int main(int argc, char** argv)
             cout << "Reading Halo dir " << argv[1] << endl;
             DEUSHalos simulation(argv[1]);
             int maxHaloToDisplay = 5;
-            int randomHalo = 55442;
+            int randomHalo = 1651288; //1651288;
             
             for(int i=0; i<maxHaloToDisplay; i++) {
                     cout << "  HALO " << i << ": "                             
@@ -117,9 +116,9 @@ int main(int argc, char** argv)
             }
             cout << "TOTAL SIMULATION " << simulation.nFiles() << " files, " << simulation.nHalos() << " halos" << endl;
             
-            cout << "RANDOM HALO = " << randomHalo << endl;
-            
-            simulation.loadParticles(randomHalo);            
+            cout << "RANDOM HALO : " << randomHalo << endl;
+                       
+            simulation.loadParticles(randomHalo);
             FOFParticles *haloParticles = simulation.halos(randomHalo)->particles();
             
             for(int j=0; j<haloParticles->npart(); j++) {

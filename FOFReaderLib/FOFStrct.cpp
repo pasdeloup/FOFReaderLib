@@ -59,17 +59,20 @@ void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and 
                 }
                 else {
                     myHalo->skipParticles();
-                }
+                }                
                 this->_halos.push_back(myHalo);                    
-           }            
-        }     
+           }       
+        }   
+        this->close();
     }
 }
 
 // Open file and read cube (not multi)
 void FOFStrct::addStrctFile(std::string filename, bool readIds, bool readParticles)
 {   
+#ifdef DEBUG_FOF
     std::cout << "Adding " << filename << std::endl;
+#endif
     FOFStrct *multi;
     
     multi = new FOFStrct(filename, readIds, readParticles);
@@ -77,6 +80,6 @@ void FOFStrct::addStrctFile(std::string filename, bool readIds, bool readParticl
     this->_halos.reserve(this->nHalos() + multi->nHalos());
     for(int i=0; i<multi->nHalos(); i++) {
         this->_halos.push_back(multi->halos(i));
-    }
+    }    
 }
 

@@ -8,6 +8,7 @@
 #ifndef FOFREADERLIB_H
 #define	FOFREADERLIB_H
 
+#include "FOFFile.h"
 #include "FOFCube.h"
 #include "FOFMultiCube.h"
 #include "FOFStrct.h"
