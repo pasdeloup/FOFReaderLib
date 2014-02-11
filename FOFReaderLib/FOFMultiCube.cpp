@@ -97,11 +97,16 @@ void FOFMultiCube::addMultiCubeFile(std::string filename, bool readIds, bool rea
 #endif
     FOFMultiCube *multi;
     
-    multi = new FOFMultiCube(filename, readIds, readParticles);
+    try {
+        multi = new FOFMultiCube(filename, readIds, readParticles);
     
-    this->_cubes.reserve(this->nCubes() + multi->nCubes());
-    for(int i=0; i<multi->nCubes(); i++) {
-        this->_cubes.push_back(multi->cubes(i));
+        this->_cubes.reserve(this->nCubes() + multi->nCubes());
+        for(int i=0; i<multi->nCubes(); i++) {
+            this->_cubes.push_back(multi->cubes(i));
+        }    
+    }
+    catch (const std::ios_base::failure& e) {
+        std::cerr << "Can't read " << filename << std::endl;
     }    
 }
 

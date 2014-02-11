@@ -50,7 +50,8 @@ FOFParticles::FOFParticles(const FOFParticles& orig)
 }
 
 FOFParticles::~FOFParticles()
-{   
+{
+    this->releaseParticles();
 }
 
 /**

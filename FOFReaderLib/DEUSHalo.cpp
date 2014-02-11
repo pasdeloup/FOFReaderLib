@@ -28,4 +28,21 @@ DEUSHalo::~DEUSHalo()
 {
 }
 
+void DEUSHalo::calculateAvgVelocity(float *coords)
+{
+    if(this->_particles == 0) { // Particles needed
+        return;
+    }
+    coords[0] = coords[1] = coords[2] = 0.0f;
+    for(int i=0; i<this->_mass; i++) {
+        coords[0] += this->_particles->velX(i);
+        coords[1] += this->_particles->velY(i);
+        coords[2] += this->_particles->velZ(i);
+    }
+    coords[0] /= this->_mass;
+    coords[1] /= this->_mass;
+    coords[2] /= this->_mass;
+    return;    
+}
+
 

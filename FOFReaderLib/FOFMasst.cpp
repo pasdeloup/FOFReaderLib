@@ -38,13 +38,13 @@ FOFMasst::~FOFMasst()
 
 void FOFMasst::readMasstFile() // Open file and read masst
 {
-    if(this->isDir()) {
-         std::vector<std::string> files;
-         bool res=this->getFilesFromDir("masst",&files);
-         for(int i=0; i<files.size();i++) {             
-             addMasstFile(files[i]);  // Never read particles from a directory !
-         }
-    }    
+    if (this->isDir()) {
+        std::vector<std::string> files;
+        bool res = this->getFilesFromDir("masst", &files);
+        for (int i = 0; i < files.size(); i++) {
+            addMasstFile(files[i]); // Never read particles from a directory !
+        }
+    }
     else {
         bool endianness;
         this->_nHalos = this->openAndReadFirstInt();
@@ -59,16 +59,16 @@ void FOFMasst::readMasstFile() // Open file and read masst
             this->_fortranFile->readVector(temp);
 
             FOFHalo *myHalo = new FOFHalo(
-                    this->convert<long long>(temp, 0, endianness),
-                    this->convert<float>(temp, 12, endianness),
-                    this->convert<float>(temp, 16, endianness),                
-                    this->convert<float>(temp, 20, endianness),                                      
-                    this->convert<int>(temp, 8, endianness)
-                );
+                                          this->convert<long long>(temp, 0, endianness),
+                                          this->convert<float>(temp, 12, endianness),
+                                          this->convert<float>(temp, 16, endianness),
+                                          this->convert<float>(temp, 20, endianness),
+                                          this->convert<int>(temp, 8, endianness)
+                                          );
 
-            this->_halos.push_back(myHalo);    
+            this->_halos.push_back(myHalo);
         }
-        
+
         this->_fortranFile->close();
     }
 }
@@ -79,14 +79,20 @@ void FOFMasst::addMasstFile(std::string filename) // Open file and read masst
     std::cout << "Adding " << filename << std::endl;
 #endif
     FOFMasst *multi;
-    
-    multi = new FOFMasst(filename);
-    
-    this->_halos.reserve(this->nHalos() + multi->nHalos());
-    for(int i=0; i<multi->nHalos(); i++) {
-        this->_halos.push_back(multi->halos(i));
+
+    try {
+
+        multi = new FOFMasst(filename);
+
+        this->_halos.reserve(this->nHalos() + multi->nHalos());
+        for (int i = 0; i < multi->nHalos(); i++) {
+            this->_halos.push_back(multi->halos(i));
+        }
+        this->_nHalos = this->_halos.size();
     }
-    this->_nHalos = this->_halos.size();    
+    catch (const std::ios_base::failure& e) {
+        std::cerr << "Can't read " << filename << std::endl;
+    }
 }
 
 

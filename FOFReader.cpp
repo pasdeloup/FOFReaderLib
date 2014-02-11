@@ -117,7 +117,7 @@ int main(int argc, char** argv)
             cout << "Reading Halo dir " << argv[1] << endl;
             DEUSHalos simulation(argv[1]);
             int maxHaloToDisplay = 5;
-            int randomHalo = 1651288; //1651288;
+            int randomHalo = 13; //1651288; //1651288;
             
             for(int i=0; i<maxHaloToDisplay; i++) {
                     cout << "  HALO " << i << ": "                             
@@ -142,6 +142,11 @@ int main(int argc, char** argv)
                             << "velocity (" << haloParticles->velX(j) << "," << haloParticles->velY(j) << "," << haloParticles->velZ(j) << ")"
                             << endl;
             }
+            float *haloVelocity = new float[3];
+            simulation.halos(randomHalo)->calculateAvgVelocity(haloVelocity);
+            cout << "   Halo Velocity "  
+                            << " (" << haloVelocity[0] << "," << haloVelocity[1] << "," << haloVelocity[2] << ")"
+                    << endl;
             
             break;
         }

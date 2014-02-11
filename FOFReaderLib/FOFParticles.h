@@ -25,7 +25,7 @@ public:
     FOFParticles();
     FOFParticles(const FOFParticles& orig);
     FOFParticles(FortranFile<unsigned int> *_fortranFile);
-    FOFParticles(std::string filename,int npart, std::streamoff position, int mode);
+    FOFParticles(std::string filename,int npart, std::streamoff position, int mode = READ_POS | READ_VEL);
     
     virtual ~FOFParticles();
     

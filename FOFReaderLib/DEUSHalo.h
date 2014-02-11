@@ -22,7 +22,7 @@
 class DEUSHalo {
 public:
     DEUSHalo();
-    DEUSHalo(float x, float y, float z, int mass, int fileindex, int haloindex): _x(x), _y(y), _z(z), _mass(mass), _fileindex(fileindex), _haloindex(haloindex) {}
+    DEUSHalo(float x, float y, float z, int mass, int fileindex, int haloindex): _x(x), _y(y), _z(z), _mass(mass), _fileindex(fileindex), _haloindex(haloindex), _particles(0) {}
     DEUSHalo(const DEUSHalo& orig);
     virtual ~DEUSHalo();
     
@@ -33,7 +33,8 @@ public:
     int fileindex() {return _fileindex;}
     int haloindex() {return _haloindex;}
     FOFParticles *particles(){return _particles;}
-    void particles(FOFParticles *particles){_particles = particles;}
+    void calculateAvgVelocity(float *coords);
+    void particles(FOFParticles *particles){_particles = particles;}    
     
 private:    
     float _x;
@@ -41,7 +42,7 @@ private:
     float _z;
     int  _mass;
     int _fileindex;
-    int _haloindex;
+    int _haloindex;    
     FOFParticles *_particles;
 };
 
