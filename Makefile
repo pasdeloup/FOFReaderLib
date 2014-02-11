@@ -26,4 +26,4 @@ getBiggestHalo: getBiggestHalo.o $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 	
 clean:
-	rm -rf *o FOFReaderLib/*.o FOFReader getBiggestHalo
+	rm -rf *o FOFReaderLib/*.o FOFReaderLib/FOFFiles/*.o FOFReaderLib/DEUSSimulation/*.o FOFReader getBiggestHalo

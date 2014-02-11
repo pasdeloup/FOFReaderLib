@@ -42,6 +42,7 @@ FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff posit
     this->_filename = filename;
     this->_npart = npart;
     
+    this->openAndReadFirstInt(); // just to check Endianness    
     this->readParticles(mode);    
 }
 
@@ -66,9 +67,6 @@ void FOFParticles::readParticles(int mode)
 #endif
     
     if(!this->_fortranFile->readStream()->is_open()) {
-#ifdef DEBUG_FOF    
-    std::cout << "Reopen " << this->_filename << std::endl;
-#endif        
         this->_fortranFile->openRead(this->_filename);
     }
     
