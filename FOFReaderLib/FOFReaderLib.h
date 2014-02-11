@@ -8,12 +8,15 @@
 #ifndef FOFREADERLIB_H
 #define	FOFREADERLIB_H
 
-#include "FOFFile.h"
-#include "FOFCube.h"
-#include "FOFMultiCube.h"
-#include "FOFStrct.h"
-#include "FOFMasst.h"
-#include "DEUSHalos.h"
+#include "FOFFiles/FOFFile.h"
+#include "FOFFiles/FOFCube.h"
+#include "FOFFiles/FOFMultiCube.h"
+#include "FOFFiles/FOFStrct.h"
+#include "FOFFiles/FOFMasst.h"
+#include "FOFFiles/FOFHalo.h"
+#include "DEUSSimulation/DEUSHalos.h"
+#include "DEUSSimulation/DEUSCubes.h"
+#include "DEUSSimulation/DEUSArea.h"
 
 #endif	/* FOFREADERLIB_H */
 

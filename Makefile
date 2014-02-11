@@ -1,15 +1,17 @@
 CC=icpc
 CFLAGS=-c -Wall -O3
 LDFLAGS=
-SOURCES= FOFReaderLib/FOFCube.cpp \
-    FOFReaderLib/FOFFile.cpp \
-    FOFReaderLib/FOFHalo.cpp \
-    FOFReaderLib/FOFMasst.cpp \
-    FOFReaderLib/FOFMultiCube.cpp \
-    FOFReaderLib/FOFParticles.cpp \
-    FOFReaderLib/FOFStrct.cpp \
-    FOFReaderLib/DEUSHalos.cpp \
-    FOFReaderLib/DEUSHalo.cpp
+SOURCES= FOFReaderLib/FOFFiles/FOFCube.cpp \
+    FOFReaderLib/FOFFiles/FOFFile.cpp \
+    FOFReaderLib/FOFFiles/FOFHalo.cpp \
+    FOFReaderLib/FOFFiles/FOFMasst.cpp \
+    FOFReaderLib/FOFFiles/FOFMultiCube.cpp \
+    FOFReaderLib/FOFFiles/FOFParticles.cpp \
+    FOFReaderLib/FOFFiles/FOFStrct.cpp \
+    FOFReaderLib/DEUSSimulation/DEUSHalos.cpp \
+    FOFReaderLib/DEUSSimulation/DEUSHalo.cpp \
+    FOFReaderLib/DEUSSimulation/DEUSCubes.cpp \
+    FOFReaderLib/DEUSSimulation/DEUSArea.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: $(SOURCES) FOFReader getBiggestHalo

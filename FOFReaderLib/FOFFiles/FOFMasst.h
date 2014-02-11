@@ -1,48 +1,47 @@
 /* ********************************** CELL ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
 // PROJECT :        DEUS_SERVER
-// TITLE :          DEUSHalos
+// TITLE :          FOFMasst
 // DESCRIPTION :    Mesh cells integrating particles
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
-/// \file           DEUSHalos.h
+/// \file           FOFMasst.h
 /// \brief          Mesh cells integrating particles
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#ifndef DEUSHALOS_H
-#define	DEUSHALOS_H
+#ifndef FOFMASST_H
+#define	FOFMASST_H
 
-#include "FOFStrct.h"
-#include "FOFMasst.h"
 #include "FOFFile.h"
-#include "DEUSHalo.h"
+#include "FOFHalo.h"
 
-class DEUSHalos {
+class FOFMasst : protected FOFFile
+{
 public:
-    DEUSHalos(std::string directory);
-    DEUSHalos(const DEUSHalos& orig);
-    virtual ~DEUSHalos();
+    FOFMasst();
+    FOFMasst(const FOFMasst& orig);
+    FOFMasst(std::string filename);
+    virtual ~FOFMasst();
+        
+    // Getters
+    int nHalos() {return _nHalos;}
+    std::vector<FOFHalo*> halos() {return _halos;}
+    FOFHalo* halos(int i) {return _halos[i];}
     
-    DEUSHalo *halos(int i) {return _halos[i];}
-    std::string filename(int i) {return _masstFilename[i];}
-    long long nHalos() {return _halos.size();}
-    int nFiles() {return _masstFilename.size();}
-    void loadParticles(int i, int mode = FOFParticles::READ_POS|FOFParticles::READ_VEL);    
-    void releaseParticles(int i);
+    // Reader   
+    void readMasstFile(); // Open file and read masst
+    void addMasstFile(std::string filename); // add file and read masst
     
 private:
-    void loadMasst();    
-    
-    FOFFile *_directory;
-    std::vector<DEUSHalo*> _halos;
-    std::vector<std::string> _masstFilename;
+    int _nHalos;
+    std::vector<FOFHalo*> _halos;
 
 };
 
-#endif	/* DEUSHALOS_H */
+#endif	/* FOFMASST_H */
 

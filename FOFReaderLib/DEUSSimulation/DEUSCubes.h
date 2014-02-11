@@ -1,47 +1,35 @@
 /* ********************************** CELL ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
 // PROJECT :        DEUS_SERVER
-// TITLE :          FOFMasst
+// TITLE :          DEUSCube
 // DESCRIPTION :    Mesh cells integrating particles
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
-/// \file           FOFMasst.h
+/// \file           DEUSCube.h
 /// \brief          Mesh cells integrating particles
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#ifndef FOFMASST_H
-#define	FOFMASST_H
+#ifndef DEUSCUBE_H
+#define	DEUSCUBE_H
 
-#include "FOFFile.h"
-#include "FOFHalo.h"
+#include "DEUSArea.h"
+#include "../FOFFiles/FOFMultiCube.h"
 
-class FOFMasst : protected FOFFile
-{
+class DEUSCubes {
 public:
-    FOFMasst();
-    FOFMasst(const FOFMasst& orig);
-    FOFMasst(std::string filename);
-    virtual ~FOFMasst();
-        
-    // Getters
-    int nHalos() {return _nHalos;}
-    std::vector<FOFHalo*> halos() {return _halos;}
-    FOFHalo* halos(int i) {return _halos[i];}
-    
-    // Reader   
-    void readMasstFile(); // Open file and read strct
-    void addMasstFile(std::string filename); // add file and read masst
-    
+    DEUSCubes();
+    DEUSCubes(const DEUSCubes& orig);
+    virtual ~DEUSCubes();
+    FOFCube *cubes(int i) {return _cubes.cubes(i);}
 private:
-    int _nHalos;
-    std::vector<FOFHalo*> _halos;
+    FOFMultiCube _cubes;
 
 };
 
-#endif	/* FOFMASST_H */
+#endif	/* DEUSCUBE_H */
 

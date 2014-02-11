@@ -1,6 +1,7 @@
 /* 
  * FOF Reader Lib
  * Usage sample
+ * Author: jpasdeloup
  * Created on 1 octobre 2013, 16:22
  */
 
@@ -27,13 +28,16 @@ int main(int argc, char** argv)
             int maxDetailCubeToDisplay = 2;
             
             FOFMultiCube multi(argv[1], false, false); // don't use default, don't read particles just header
-            for(int i=0; i<multi.nCubes(); i++) {
-                cout << "Cube " << i << ": " 
-                        << multi.cubes(i)->npart() << " particles, "
-                        << "area: (" << multi.cubes(i)->minX() << "," << multi.cubes(i)->minY() << "," << multi.cubes(i)->minZ() << ") "
-                        << "to (" << multi.cubes(i)->maxX() << "," << multi.cubes(i)->maxY() << "," << multi.cubes(i)->maxZ() << ")"
-                        << endl;
-                if(i < maxDetailCubeToDisplay) {
+            
+            for(int i=0; i<multi.nCubes(); i++) {                            
+                          
+                    cout << "Cube " << i << ": " 
+                            << multi.cubes(i)->npart() << " particles, "
+                            << "area: (" << multi.cubes(i)->minX() << "," << multi.cubes(i)->minY() << "," << multi.cubes(i)->minZ() << ") "
+                            << "to (" << multi.cubes(i)->maxX() << "," << multi.cubes(i)->maxY() << "," << multi.cubes(i)->maxZ() << ")"
+                            << endl;       
+                    
+               if(i < maxDetailCubeToDisplay) {
                     multi.cubes(i)->readParticles(FOFParticles::READ_ALL); // Need to read particles
                     for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
                         cout << "   Particle " << j << ": "

@@ -1,6 +1,6 @@
 /* 
  * File:   main.cpp
- * Author: admin
+ * Author: jpasdeloup
  *
  * Created on 5 février 2013, 15:24
  */
@@ -15,7 +15,6 @@
 #include <vector>
 #include <algorithm>    // std::sort
 #include "FOFReaderLib/FOFReaderLib.h"
-#include "FOFReaderLib/FOFHalo.h"
 
 using namespace std;
 

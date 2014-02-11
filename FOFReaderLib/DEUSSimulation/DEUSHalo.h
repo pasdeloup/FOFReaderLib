@@ -17,7 +17,7 @@
 #ifndef DEUSHALO_H
 #define	DEUSHALO_H
 
-#include "FOFParticles.h"
+#include "../FOFFiles/FOFParticles.h"
 
 class DEUSHalo {
 public:
