@@ -16,6 +16,8 @@
 
 #include "DEUSArea.h"
 #include <iostream>
+#include <math.h> 
+#include <algorithm> 
 
 DEUSArea::DEUSArea()
 {    
@@ -57,6 +59,46 @@ DEUSArea::DEUSArea(float *boundaries, float periodicity)
     this->_coords[0][0][1] = boundaries[1];
     this->_coords[0][1][1] = boundaries[3];
     this->_coords[0][2][1] = boundaries[5];    
+    this->calculateShift();
+}
+
+DEUSArea::DEUSArea(float X, float Y, float Z, float LX, float LY, float LZ, float angle, float length, float periodicity)
+{
+    this->initArea(periodicity); 
+    
+    // First calculate angle
+    float vx = LX-X;
+    float vy = LY-Y;
+    float vz = LZ-Z;
+    
+    float pi = 4.*atan(1.);
+    float rho = sqrt(vx*vx+vy*vy+vz*vz);    
+    float phi = acos(vz/rho);
+    float theta;
+    
+    if(vy == 0) {
+        theta = vx>0 ? 0 : pi;        
+    }
+    else {
+        theta = acos(vx/(sqrt(vx*vx+vy*vy)));
+        if(vy>0) {
+            theta = 2*pi - theta;
+        }
+    }   
+    
+    // Then compute projected lookat
+    float lx2 = length*sin(phi)*cos(theta)+X;
+    float ly2 = length*sin(phi)*sin(theta)+Y;
+    float lz2 = length*cos(phi)+Z;
+    float R = length*tan(angle);
+        
+    // Now make area
+    this->_coords[0][0][0] = std::min(std::min(X,lx2),std::min(lx2-R,lx2+R));
+    this->_coords[0][1][0] = std::min(std::min(Y,ly2),std::min(ly2-R,ly2+R));
+    this->_coords[0][2][0] = std::min(std::min(Z,lz2),std::min(lz2-R,lz2+R));
+    this->_coords[0][0][1] = std::max(std::max(X,lx2),std::max(lx2-R,lx2+R));
+    this->_coords[0][1][1] = std::max(std::max(Y,ly2),std::max(ly2-R,lz2+R));
+    this->_coords[0][2][1] = std::max(std::max(Z,lz2),std::max(lz2-R,lz2+R));
     this->calculateShift();
 }
 

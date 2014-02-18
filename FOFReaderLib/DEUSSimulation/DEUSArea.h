@@ -23,6 +23,7 @@ public:
     DEUSArea();    
     DEUSArea(float minX, float maxX, float minY, float maxY, float minZ, float maxZ, float periodicity = 1.0f);    
     DEUSArea(float X, float Y, float Z, float size, float periodicity = 1.0f);
+    DEUSArea(float X, float Y, float Z, float LX, float LY, float LZ, float angle, float length, float periodicity = 1.0f);
     DEUSArea(float *boundaries, float periodicity = 1.0f);
     DEUSArea(const DEUSArea& orig);
     virtual ~DEUSArea();
