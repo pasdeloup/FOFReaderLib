@@ -36,6 +36,7 @@ public:
     bool cubeIntersect(float *cubeBoundaries);
     
     float coords(int shift, int pos, int minmax) {return _coords[shift][pos][minmax];}
+    float shift(int shift, int pos) {return _shift[shift][pos];}
     
     void display();
     

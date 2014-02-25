@@ -76,6 +76,8 @@ DEUSArea::DEUSArea(float X, float Y, float Z, float LX, float LY, float LZ, floa
     float phi = acos(vz/rho);
     float theta;
     
+    angle = angle * atan(1.) / 90; // convert to radian and divide per 2 (used as +/- angle)
+    
     if(vy == 0) {
         theta = vx>0 ? 0 : pi;        
     }
@@ -91,13 +93,23 @@ DEUSArea::DEUSArea(float X, float Y, float Z, float LX, float LY, float LZ, floa
     float ly2 = length*sin(phi)*sin(theta)+Y;
     float lz2 = length*cos(phi)+Z;
     float R = length*tan(angle);
+    
+    std::cout << "pi= " << pi
+            << ", rho=" << rho
+            << ", phi=" << phi
+            << ", theta=" << theta
+            << ", lx2=" << lx2
+            << ", ly2=" << ly2
+            << ", lz2=" << lz2
+            << ", R=" << R
+            << std::endl;
         
     // Now make area
     this->_coords[0][0][0] = std::min(std::min(X,lx2),std::min(lx2-R,lx2+R));
     this->_coords[0][1][0] = std::min(std::min(Y,ly2),std::min(ly2-R,ly2+R));
     this->_coords[0][2][0] = std::min(std::min(Z,lz2),std::min(lz2-R,lz2+R));
     this->_coords[0][0][1] = std::max(std::max(X,lx2),std::max(lx2-R,lx2+R));
-    this->_coords[0][1][1] = std::max(std::max(Y,ly2),std::max(ly2-R,lz2+R));
+    this->_coords[0][1][1] = std::max(std::max(Y,ly2),std::max(ly2-R,ly2+R));
     this->_coords[0][2][1] = std::max(std::max(Z,lz2),std::max(lz2-R,lz2+R));
     this->calculateShift();
 }
@@ -151,7 +163,20 @@ void DEUSArea::calculateShift()
 
 bool DEUSArea::particuleIsInside(float &X, float &Y, float &Z)
 {
-    return false;
+    float coords[3] = {X,Y,Z};
+    bool res = true;
+    for(int pos=0; pos<3; pos++) {
+        bool subres = false;
+        for(int shift=0; shift<2; shift++) {            
+            bool subsubres = coords[pos] < this->coords(shift,pos, 1) && coords[pos] > this->coords(shift,pos, 0);
+            if(subsubres) {
+                coords[pos] += this->shift(shift, pos);
+            }
+            subres |= subsubres;            
+        }
+        res &= subres;
+    }    
+    return res;    
 }
 
 bool DEUSArea::intersectArea(DEUSArea area)
