@@ -17,6 +17,7 @@
 #include "DEUSSimulation/DEUSHalos.h"
 #include "DEUSSimulation/DEUSCubes.h"
 #include "DEUSSimulation/DEUSArea.h"
+#include "DEUSSimulation/DEUSSimulationSingleton.h"
 
 #endif	/* FOFREADERLIB_H */
 

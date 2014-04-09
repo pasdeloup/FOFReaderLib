@@ -16,10 +16,16 @@
 
 #include "DEUSHalos.h"
 
+DEUSHalos::DEUSHalos()
+{
+}
+
 DEUSHalos::DEUSHalos(std::string directory)
 {
     this->_directory = new FOFFile(directory);
-    this->loadMasst();
+    if(directory != "") {        
+        this->loadMasst();
+    }    
 }
 
 DEUSHalos::DEUSHalos(const DEUSHalos& orig)
@@ -34,12 +40,17 @@ void DEUSHalos::loadMasst()
 {
     if (_directory->isDir()) {
         std::vector<std::string> files;
-        bool res = _directory->getFilesFromDir("masst", &files);
+        bool res = _directory->getFilesFromDir("masst", &files);     
+        
+        std::vector<DEUSHalo*> *haloperfile = new std::vector<DEUSHalo*>[files.size()];
+        
+        #pragma omp parallel for num_threads(64)
         for (int i = 0; i < files.size(); i++) {
             try {
                 FOFMasst *masst = new FOFMasst(files[i]);
-                _masstFilename.push_back(files[i]);
-                _halos.reserve(_halos.size() + masst->nHalos());
+                //_masstFilename.push_back(files[i]);
+                haloperfile[i].reserve(masst->nHalos());
+                //_halos.reserve(_halos.size() + masst->nHalos());
                 int index = 24; // 4 int + 2*4  + 3*4
                 for (int j = 0; j < masst->nHalos(); j++) {
                     DEUSHalo *halo = new DEUSHalo(
@@ -51,7 +62,8 @@ void DEUSHalos::loadMasst()
                                                   index
                                                   );
                     index += 36 + 32 * masst->halos(j)->mass(); // 3*2*4 + mass * 6*4+8 = 24 + mass * 36
-                    _halos.push_back(halo);
+                    haloperfile[i].push_back(halo);
+                    //_halos.push_back(halo);
                 }
                 delete masst;
             }
@@ -59,6 +71,13 @@ void DEUSHalos::loadMasst()
                 std::cerr << "Can't read " << files[i] << std::endl;
             }
         }
+        std::cout << "Merging..." << std::endl;
+        // Merge results
+        for (int i = 0; i < files.size(); i++) {
+            _masstFilename.push_back(files[i]);
+            _halos.insert(_halos.end(),haloperfile[i].begin(),haloperfile[i].end());
+        }
+        std::cout << "Done" << std::endl;
     }
     else {
         std::cout << "Error, arg1 should be a directory" << std::endl;

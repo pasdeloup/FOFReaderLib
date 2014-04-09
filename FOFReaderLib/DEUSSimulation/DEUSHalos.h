@@ -24,6 +24,7 @@
 
 class DEUSHalos {
 public:
+    DEUSHalos();
     DEUSHalos(std::string directory);
     DEUSHalos(const DEUSHalos& orig);
     virtual ~DEUSHalos();

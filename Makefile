@@ -11,7 +11,8 @@ SOURCES= FOFReaderLib/FOFFiles/FOFCube.cpp \
     FOFReaderLib/DEUSSimulation/DEUSHalos.cpp \
     FOFReaderLib/DEUSSimulation/DEUSHalo.cpp \
     FOFReaderLib/DEUSSimulation/DEUSCubes.cpp \
-    FOFReaderLib/DEUSSimulation/DEUSArea.cpp
+    FOFReaderLib/DEUSSimulation/DEUSArea.cpp \
+    FOFReaderLib/DEUSSimulation/DEUSSimulationSingleton.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: $(SOURCES) FOFReader getBiggestHalo

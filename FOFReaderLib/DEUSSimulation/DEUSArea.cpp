@@ -136,6 +136,7 @@ void DEUSArea::initArea(float periodicity)
                     this->_coords[shift][pos][minmax] = 0.0f;                    
                 }
             }
+            this->_shift[shift][pos] = 0.0f;
         }
     }
 }
@@ -154,9 +155,9 @@ void DEUSArea::calculateShift()
         }
         if(this->_coords[0][pos][1] > this->_periodicity) {
             this->_coords[1][pos][0] = 0.0f;
-            this->_coords[1][pos][1] = this->_coords[0][pos][0] - this->_periodicity;
+            this->_coords[1][pos][1] = this->_coords[0][pos][1] - this->_periodicity;
             this->_coords[0][pos][1] = this->_periodicity;
-            this->_shift[0][pos] = -this->_periodicity;
+            this->_shift[1][pos] = this->_periodicity;
         }
     }
 }
@@ -172,10 +173,13 @@ bool DEUSArea::particuleIsInside(float &X, float &Y, float &Z)
             if(subsubres) {
                 coords[pos] += this->shift(shift, pos);
             }
-            subres |= subsubres;            
+            subres |= subsubres;
         }
         res &= subres;
-    }    
+    }
+    X = coords[0];
+    Y = coords[1];
+    Z = coords[2];
     return res;    
 }
 
