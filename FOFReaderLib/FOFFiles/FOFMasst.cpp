@@ -40,8 +40,8 @@ void FOFMasst::readMasstFile() // Open file and read masst
 {
     if (this->isDir()) {
         std::vector<std::string> files;
-        bool res = this->getFilesFromDir("masst", &files);
-        for (int i = 0; i < files.size(); i++) {
+        this->getFilesFromDir("masst", &files);
+        for (unsigned int i = 0; i < files.size(); i++) {
             addMasstFile(files[i]); // Never read particles from a directory !
         }
     }

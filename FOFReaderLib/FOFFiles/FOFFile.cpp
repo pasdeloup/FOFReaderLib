@@ -64,6 +64,27 @@ int FOFFile::openAndReadFirstInt(std::string filename, FortranFile<unsigned int>
     return value;
 }
 
+int FOFFile::openAndReadFirstArray(int *&value) 
+{   
+    return this->openAndReadFirstArray(value, this->_filename, this->_fortranFile);
+}
+
+int FOFFile::openAndReadFirstArray(int *&value, std::string filename, FortranFile<unsigned int> * fortranFile) 
+{    
+    unsigned int len;
+    
+    try {
+        fortranFile->openRead(filename);        
+        fortranFile->readArray(value, len);
+    } catch (const std::ios_base::failure& e) {
+        fortranFile->close();
+        fortranFile->openRead(filename);
+        fortranFile->setEndianness(true);
+        fortranFile->readArray(value, len);
+    }
+    return len;
+}
+
 bool FOFFile::isDir()
 {
     DIR *Dir;
@@ -79,7 +100,7 @@ bool FOFFile::getFilesFromDir(std::string type, std::vector<std::string> *files)
     if (Dir == NULL) {
         return false;
     }    
-    while (DirEntry = readdir(Dir)) {
+    while ((DirEntry = readdir(Dir))) {
             if (contains(DirEntry->d_name,type)) {
                 files->push_back(this->_filename + "/" + DirEntry->d_name);
             }

@@ -40,12 +40,12 @@ void DEUSHalos::loadMasst()
 {
     if (_directory->isDir()) {
         std::vector<std::string> files;
-        bool res = _directory->getFilesFromDir("masst", &files);     
+        _directory->getFilesFromDir("masst", &files);     
         
         std::vector<DEUSHalo*> *haloperfile = new std::vector<DEUSHalo*>[files.size()];
         
         #pragma omp parallel for num_threads(64)
-        for (int i = 0; i < files.size(); i++) {
+        for (unsigned int i = 0; i < files.size(); i++) {
             try {
                 FOFMasst *masst = new FOFMasst(files[i]);
                 //_masstFilename.push_back(files[i]);
@@ -73,7 +73,7 @@ void DEUSHalos::loadMasst()
         }
         std::cout << "Merging..." << std::endl;
         // Merge results
-        for (int i = 0; i < files.size(); i++) {
+        for (unsigned int i = 0; i < files.size(); i++) {
             _masstFilename.push_back(files[i]);
             _halos.insert(_halos.end(),haloperfile[i].begin(),haloperfile[i].end());
         }

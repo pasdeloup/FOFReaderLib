@@ -39,8 +39,8 @@ void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and 
 {
     if (this->isDir()) {
         std::vector<std::string> files;
-        bool res = this->getFilesFromDir("strct", &files);
-        for (int i = 0; i < files.size(); i++) {
+        this->getFilesFromDir("strct", &files);
+        for (unsigned int i = 0; i < files.size(); i++) {
             addStrctFile(files[i], false, false); // Never read particles from a directory !
         }
     }

@@ -1,6 +1,8 @@
 *.o
 *.so
 nbproject/
-FOFReader
 .dep.inc
+FOFReader
 getBiggestHalo
+exportMasst
+generateImage

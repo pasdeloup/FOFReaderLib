@@ -14,8 +14,10 @@
 #include "FOFFiles/FOFStrct.h"
 #include "FOFFiles/FOFMasst.h"
 #include "FOFFiles/FOFHalo.h"
+#include "FOFFiles/FOFCubeGrav.h"
 #include "DEUSSimulation/DEUSHalos.h"
 #include "DEUSSimulation/DEUSCubes.h"
+#include "DEUSSimulation/DEUSGrav.h"
 #include "DEUSSimulation/DEUSArea.h"
 #include "DEUSSimulation/DEUSSimulationSingleton.h"
 

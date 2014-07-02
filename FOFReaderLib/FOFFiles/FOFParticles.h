@@ -62,7 +62,7 @@ public:
     void releaseParticles(); // Remove particles to free memory
     
 protected:
-    int _npart;    
+    int _npart;
     std::vector<float> _position;
     std::vector<float> _velocity;
     std::vector<long long> _id;  

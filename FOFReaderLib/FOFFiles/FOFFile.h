@@ -40,6 +40,9 @@ public:
     int openAndReadFirstInt(std::string filename, FortranFile<unsigned int> * fortranFile);
     int openAndReadFirstInt();
     
+    int openAndReadFirstArray(int *&value, std::string filename, FortranFile<unsigned int> * fortranFile);
+    int openAndReadFirstArray(int *&value);    
+    
     void close() {this->_fortranFile->close();}
     
     // Check if current file is a dir or a real file

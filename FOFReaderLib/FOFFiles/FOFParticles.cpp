@@ -61,7 +61,7 @@ FOFParticles::~FOFParticles()
  */
 void FOFParticles::readParticles(int mode)
 {
-    int len = this->_npart;
+    unsigned int len = this->_npart;
 #ifdef DEBUG_FOF    
     std::cout << "Len = " << len << std::endl;
 #endif

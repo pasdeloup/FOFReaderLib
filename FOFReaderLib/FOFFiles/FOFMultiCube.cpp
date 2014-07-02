@@ -43,8 +43,8 @@ void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
 {   
     if(this->isDir()) {        
          std::vector<std::string> files;
-         bool res=this->getFilesFromDir("cube",&files);
-         for(int i=0; i<files.size();i++) {             
+         this->getFilesFromDir("cube",&files);
+         for(unsigned int i=0; i<files.size();i++) {             
              addMultiCubeFile(files[i], false, false);  // Never read particles from a directory !
          }
     }    

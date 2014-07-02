@@ -154,6 +154,45 @@ int main(int argc, char** argv)
             
             break;
         }
+        /* 
+         * CUBE GRAV USAGE
+         */
+        case 4: 
+        {
+            cout << "Reading cube grav " << argv[1] << endl;            
+            FOFCubeGrav grav(argv[1]);
+            int levels = grav.availableLevels();            
+            
+            cout << "Cube Grav: " 
+                            << levels << " levels, "
+                            << "area: (" << grav.minX() << "," << grav.minY() << "," << grav.minZ() << ") "
+                            << "to (" << grav.maxX() << "," << grav.maxY() << "," << grav.maxZ() << ")"
+                            << endl;       
+            
+            grav.readLevels(false);
+            for(int i=0; i<levels; i++) {
+                cout << "  level " << i << ": " 
+                        << grav.level(i)->nCells() << " cells"
+                        << endl;
+                int shown=0;
+                for(int j=0; j<grav.level(i)->nCells(); j++) {
+                    if(1) { //grav.level(i)->son(j) > 0) {
+                        cout << "    " << j << "th cell of 1st level: " << endl
+                            << "      position: (" << grav.level(i)->posX(j) << "," << grav.level(i)->posY(j) << "," << grav.level(i)->posZ(j) << ") " << endl
+                            << "      force: (" << grav.level(i)->fX(j) << "," << grav.level(i)->fY(j) << "," << grav.level(i)->fZ(j) << ")" << endl
+                            << "      rho: " << grav.level(i)->rho(j) << ", phi: " << grav.level(i)->phi(j) << ", redshift: " << grav.level(i)->redshift(j)
+                                 << ", son: " << grav.level(i)->son(j)
+                            << endl;
+                        shown++;
+                        if(shown>5) {
+                            break;
+                        }
+                    }
+                }
+            }            
+            grav.releaseLevels();
+            break;
+        }
         
         /*
          * UNKNOWN FORMAT
@@ -173,6 +212,7 @@ int main(int argc, char** argv)
                 "        1: FOF Struct\r\n"
                 "        2: FOF Masst\r\n"
                 "        3: DEUS Halo directory (= masst + strct)\r\n"
+                "        4: FOF Grav cube \r\n"
                 << argc << endl;
         return 0;
     }

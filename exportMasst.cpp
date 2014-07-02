@@ -28,14 +28,19 @@ int main(int argc, char** argv)
             
             for(int i=0; i<masst.nHalos(); i++) {                
                 float dist = sqrt(masst.halos(i)->x()*masst.halos(i)->x() + masst.halos(i)->y()*masst.halos(i)->y() + masst.halos(i)->z()*masst.halos(i)->z());
-                myfile << 
-                        masst.halos(i)->x() << ";" 
-                        << masst.halos(i)->y() << ";" 
-                        << masst.halos(i)->z() << ";" 
-                        << masst.halos(i)->mass() << ";"
-                        //<< dist * 21000 / 0.72 << ";"
-                        //<< convert_lcdm7[(int) (dist*10000)]
-                        << "\n";                
+                float rho = sqrt(pow(masst.halos(i)->x(),2)+pow(masst.halos(i)->y(),2)+pow(masst.halos(i)->z(),2));                
+                myfile << "INSERT INTO halos (id,x,y,z,npart,dist,redshift,rho,phi,theta) VALUES ("
+                        << masst.halos(i)->id() << "," 
+                        << masst.halos(i)->x() << "," 
+                        << masst.halos(i)->y() << "," 
+                        << masst.halos(i)->z() << "," 
+                        << masst.halos(i)->mass() << ","
+                        << dist * 21000 / 0.72 << ","
+                        << convert_lcdm7[(int) (dist*10000)] << ","
+                        << rho << ","
+                        << acos(masst.halos(i)->z() / rho) << ","
+                        << atan(masst.halos(i)->y() / masst.halos(i)->x())
+                        << ");\n";                
             }            
              cout << "TOTAL " << masst.nHalos() << " halos" << endl;             
              myfile.close();

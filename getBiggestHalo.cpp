@@ -24,8 +24,7 @@ bool massCompare (FOFHalo *i,FOFHalo *j) { return (i->mass()>j->mass()); }
 /*
  * 
  */
-int main(int argc, char** argv) {
-    unsigned char isFile = 0x8;
+int main(int argc, char** argv) {    
     DIR *Dir;
     struct dirent *DirEntry;
     vector<FOFHalo*> halos;
@@ -44,9 +43,7 @@ int main(int argc, char** argv) {
             return 2;
         }
 
-        int i = 0;
-        
-        while (DirEntry = readdir(Dir)) {
+        while ((DirEntry = readdir(Dir))) {
             if (contains(DirEntry->d_name,"masst")) {
                 cout << "Reading " << DirEntry->d_name;                
                 
