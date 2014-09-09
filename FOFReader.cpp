@@ -27,7 +27,7 @@ int main(int argc, char** argv)
             int maxParticleToDisplay = 5;
             int maxDetailCubeToDisplay = 2;
             
-            FOFMultiCube multi(argv[1], false, false); // don't use default, don't read particles just header
+            FOFMultiCube multi(argv[1], FOFParticles::DONT_READ_PARTICLES); // don't use default, don't read particles just header
             
             for(int i=0; i<multi.nCubes(); i++) {                            
                           

@@ -26,7 +26,7 @@ class FOFMultiCube : protected FOFCube
 {
 public:
     FOFMultiCube();
-    FOFMultiCube(std::string, bool readIds=false, bool readParticles=true);
+    FOFMultiCube(std::string, int readParticles = READ_POS | READ_VEL);
     FOFMultiCube(const FOFMultiCube& orig);
     virtual ~FOFMultiCube();
     
@@ -47,8 +47,8 @@ public:
     float minZ(void) {return boundaries(4);}
     float maxZ(void) {return boundaries(5);}
     
-    void readMultiCubeFile(bool readIds=false, bool readParticles=true); // Check if dir and add
-    void addMultiCubeFile(std::string filename, bool readIds=false, bool readParticles=true); // Open file and add cube (not multi)
+    void readMultiCubeFile(int readParticles = READ_POS | READ_VEL); // Check if dir and add
+    void addMultiCubeFile(std::string filename, int readParticles = READ_POS | READ_VEL); // Open file and add cube (not multi)
 
 protected:    
     std::vector<FOFCube*> _cubes;
