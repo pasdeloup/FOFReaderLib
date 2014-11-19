@@ -30,12 +30,10 @@ int main(int argc, char** argv)
         int width = 8192;
         float *image = new float[width*width];
         
-        for(int i=0; i<width; i++) {
-            image[i] = 0.0f;
+        for(int i=0; i<width*width; i++) {
+            image[i] = -10.0f;
         }
         
-        cout << "Space created " << endl;
-                
         DEUSGrav GravFiles(argv[1]);
           
         cout << "NFiles = " << GravFiles.nFiles() << endl;
@@ -49,8 +47,8 @@ int main(int argc, char** argv)
         float minZ = 0;
         float maxZ = deltaCenter * 2.0f;
         
-        bool found = false;
         unsigned int ncell = 0;
+        unsigned int nfiles = 0;
         
         for(unsigned int f=0; f<GravFiles.nFiles(); f++) {
             
@@ -61,6 +59,8 @@ int main(int argc, char** argv)
                //     && grav->minY() <= maxZ && grav->maxY() >= minZ                    
                     ) {
                 
+                //cout << grav->filename() <<  " ";     
+                
                 cout << "Cube " << f << " : " << grav->minZ() << " < Z < " << grav->maxZ() 
                     << " - " << grav->minY() << " < Y < " << grav->maxY() 
                     << " - " << grav->minX() << " < X < " << grav->maxX() << endl;
@@ -68,8 +68,9 @@ int main(int argc, char** argv)
                 cout << "=> Reading Cube " << f << " " << grav->filename() <<  "... ";                
                 cout << "nb levels = " << grav->availableLevels() << endl;
                 cout << "Level 0 = " << grav->level(0)->nCells() << endl;                
-                grav->readLevels(true);                
+                grav->readLevels(true);
                 cout << "OK" << endl;
+                
                 
                 int deltaCellX = 0; //(int) (grav->minX() * resolution);
                 int deltaCellY = 0; //(int) (grav->minY() * resolution);
@@ -78,7 +79,6 @@ int main(int argc, char** argv)
                 for(int j=0; j<grav->level(0)->nCells(); j++) {
                     if(grav->level(0)->posZ(j) > minZ && grav->level(0)->posZ(j) < maxZ) {
                         
-                        found = true;
                         ncell++;
                         
                         int x = ((grav->level(0)->posX(j) - deltaCenter + 0.5f) * (float) resolution) - deltaCellX;
@@ -94,11 +94,12 @@ int main(int argc, char** argv)
                     }            
                 }
                 grav->releaseLevels();
+                nfiles++;
             }
         }
                 
         // Now normalize
-        cout << ncell << " cells - min rho= " << minRho << ", max rho= " << maxRho << endl;        
+        cout << nfiles << " files - " << ncell << " cells - min rho= " << minRho << ", max rho= " << maxRho << endl;        
 
         myFile.write ((char*)image, width*width*4);        
         myFile.close();

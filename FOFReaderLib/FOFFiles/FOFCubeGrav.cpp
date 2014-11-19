@@ -58,7 +58,6 @@ void FOFCubeGrav::readLevels(bool onlyCoarse)
     if(onlyCoarse) {
         nLevels = 1;
     }    
-    this->_levels.reserve(nLevels);
     
     // Reopen and skip header        
     int *cellsByLevel = NULL;
@@ -67,6 +66,7 @@ void FOFCubeGrav::readLevels(bool onlyCoarse)
     this->_fortranFile->readIgnore();
     
     for(unsigned int i=0; i< nLevels; i++) {          
+        //std::cout << "read level " << i << std::endl;
         this->_levels[i]->readLevel();
     }
     this->close();
@@ -75,7 +75,8 @@ void FOFCubeGrav::readLevels(bool onlyCoarse)
 void FOFCubeGrav::releaseLevels()
 {
     for(unsigned int i=0; i< this->nLevels(); i++) {
+        //std::cout << "release level " << i << std::endl;
         this->_levels[i]->releaseLevel();
-    }
+    }    
 }
 
