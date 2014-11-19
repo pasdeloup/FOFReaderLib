@@ -27,7 +27,7 @@ class FOFCube : public FOFParticles
 public:
     FOFCube();
     FOFCube(FortranFile<unsigned int> *_fortranFile);
-    FOFCube(std::string filename, bool readIds=false, bool readParticles=true);
+    FOFCube(std::string filename, int readParticles = READ_POS | READ_VEL);
     FOFCube(const FOFCube& orig);
     virtual ~FOFCube();
     
@@ -45,8 +45,8 @@ public:
     float maxZ(void) {return _boundaries>0 ? _boundaries[5] : 0;}
     
     // Reader   
-    void readCubeFile(bool readIds=false, bool readParticles=true); // Open file and read cube (not multi) skip reading ids by default
-    void readCube(bool skipNpart=false, bool readIds=false, bool readParticles=true); // Read cube from already opened file.
+    void readCubeFile(int readParticles = READ_POS | READ_VEL); // Open file and read cube (not multi) skip reading ids by default
+    void readCube(bool skipNpart=false, int readParticles = READ_POS | READ_VEL); // Read cube from already opened file.
         
 protected:
     int _procid;

@@ -23,10 +23,10 @@ FOFMultiCube::FOFMultiCube()
 {
 }
 
-FOFMultiCube::FOFMultiCube(std::string filename, bool readIds, bool readParticles)
+FOFMultiCube::FOFMultiCube(std::string filename, int readParticles)
 { 
     this->_filename = filename;
-    this->readMultiCubeFile(readIds, readParticles);
+    this->readMultiCubeFile(readParticles);
 }
 
 FOFMultiCube::FOFMultiCube(const FOFMultiCube& orig)
@@ -39,13 +39,13 @@ FOFMultiCube::~FOFMultiCube()
 }
 
 // Open file and read cube (not multi)
-void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
+void FOFMultiCube::readMultiCubeFile(int readParticles)
 {   
     if(this->isDir()) {        
          std::vector<std::string> files;
          this->getFilesFromDir("cube",&files);
          for(unsigned int i=0; i<files.size();i++) {             
-             addMultiCubeFile(files[i], false, false);  // Never read particles from a directory !
+             addMultiCubeFile(files[i], DONT_READ_PARTICLES);  // Never read particles from a directory !
          }
     }    
     else {
@@ -57,7 +57,7 @@ void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
             this->_cubes.reserve(this->nCubes() + 1);
             FOFCube *myCube = new FOFCube(this->_fortranFile);
             myCube->npart(nCubes);
-            myCube->readCube(true, readIds, readParticles);
+            myCube->readCube(true, readParticles);
             this->_cubes.push_back(myCube);
             this->close();
         }
@@ -78,7 +78,7 @@ void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
                 std::cout << "Reading cube " << i << std::endl;
 #endif
                 FOFCube *myCube = new FOFCube(this->_fortranFile);
-                myCube->readCube(false, readIds, readParticles);            
+                myCube->readCube(false, readParticles);            
                 if(myCube->npart() > 0) {
                     this->_cubes.push_back(myCube);
                }            
@@ -90,7 +90,7 @@ void FOFMultiCube::readMultiCubeFile(bool readIds, bool readParticles)
 }
 
 // Open file and read cube (not multi)
-void FOFMultiCube::addMultiCubeFile(std::string filename, bool readIds, bool readParticles)
+void FOFMultiCube::addMultiCubeFile(std::string filename, int readParticles)
 {   
 #ifdef DEBUG_FOF
     std::cout << "Adding " << filename << std::endl;
@@ -98,7 +98,7 @@ void FOFMultiCube::addMultiCubeFile(std::string filename, bool readIds, bool rea
     FOFMultiCube *multi;
     
     try {
-        multi = new FOFMultiCube(filename, readIds, readParticles);
+        multi = new FOFMultiCube(filename, readParticles);
     
         this->_cubes.reserve(this->nCubes() + multi->nCubes());
         for(int i=0; i<multi->nCubes(); i++) {

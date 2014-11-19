@@ -29,6 +29,7 @@ public:
     
     virtual ~FOFParticles();
     
+    const static int DONT_READ_PARTICLES = 0;
     const static int READ_POS = 1;
     const static int READ_VEL = 2;
     const static int READ_IDS = 4;
