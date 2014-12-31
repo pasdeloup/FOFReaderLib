@@ -15,6 +15,7 @@
 /*////////////////////////////////////////////////////////////////////////////*/
 
 #include <cassert>
+#include <random>
 
 #include "fortranfile.h"
 #include "FOFFile.h"
@@ -43,9 +44,88 @@ FOFCube::FOFCube(const FOFCube& orig)
 {
 }
 
+FOFCube::FOFCube(int npart, int generator)
+{
+    this->_npart = npart;
+    
+    this->_position.resize(npart * 3);
+    this->_velocity.resize(npart * 3);
+    this->_id.resize(npart);
+    
+    this->_boundaries = new float[6];
+    this->_boundaries[0] = this->_boundaries[2] = this->_boundaries[4] = 0.0f;
+    this->_boundaries[1] = this->_boundaries[3] = this->_boundaries[5] = 1.0f;
+    
+    switch(generator) {
+        case RANDOM_GENERATOR:
+            this->generateRandomParticles();
+            break;
+        case HOMOGENOUS_GENERATOR:
+            this->generateHomogeneousParticles();
+            break;
+        default:
+            this->generateConstantParticles();
+    }
+}
+
 FOFCube::~FOFCube()
 {
     delete this->_boundaries;
+}
+
+void FOFCube::generateConstantParticles() 
+{        
+    for(int i=0; i<(this->_npart); i++) {
+        this->_id[i] = i;
+        this->_position[i*3 + 0] = 0.5f;
+        this->_position[i*3 + 1] = 0.5f;
+        this->_position[i*3 + 2] = 0.5f;
+        this->_velocity[i*3 + 0] = 0.0f;
+        this->_velocity[i*3 + 1] = 0.0f;
+        this->_velocity[i*3 + 2] = 0.0f;        
+    }
+}
+
+void FOFCube::generateRandomParticles() 
+{
+    // C++11 Random generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+        
+    for(int i=0; i<(this->_npart); i++) {
+        this->_id[i] = i;        
+        this->_position[i*3 + 0] = std::generate_canonical<double, 32>(gen);
+        this->_position[i*3 + 1] = std::generate_canonical<double, 32>(gen);
+        this->_position[i*3 + 2] = std::generate_canonical<double, 32>(gen);
+        this->_velocity[i*3 + 0] = std::generate_canonical<double, 32>(gen);
+        this->_velocity[i*3 + 1] = std::generate_canonical<double, 32>(gen);
+        this->_velocity[i*3 + 2] = std::generate_canonical<double, 32>(gen);        
+    }
+}
+
+void FOFCube::generateHomogeneousParticles() {
+    
+    int len = round(pow(this->_npart, 1.0/3));
+    if(pow(len,3) != this->_npart) {
+        std::cout << "Error: for homogeneous generation, number of part should be a power of 3 : 256³, 512³, ..."  << this->_npart << " != " << len << "^3" << std::endl;
+        exit(1);
+    }
+    float step = 1.0f/len;
+    
+    for(int i=0; i<len; i++) {
+        for(int j=0; j<len; j++) {
+            for(int k=0; k<len; k++) {
+                int pos = i + j*len + k*len*len;
+                this->_id[pos] = pos;
+                this->_position[pos*3 + 0] = i * step;
+                this->_position[pos*3 + 1] = j * step;
+                this->_position[pos*3 + 2] = k * step;
+                this->_velocity[pos*3 + 0] = 0.0f;
+                this->_velocity[pos*3 + 1] = 0.0f;
+                this->_velocity[pos*3 + 2] = 0.0f;        
+            }
+        }        
+    }
 }
 
 // Read cube from already opened file (can use external FortranFile for multicube reading)
@@ -80,4 +160,24 @@ void FOFCube::readCubeFile(int readParticles)
     }
     this->readCube(true, readParticles);
     this->close();
+}
+
+// Open file and write cube
+void FOFCube::writeCubeFile(std::string filename)
+{
+    std::cout << "Writing " << filename << std::endl;
+    
+    FortranFile<unsigned int> *writeFile;
+    writeFile= new FortranFile<unsigned int>;
+    writeFile->openWrite(filename);
+    
+    writeFile->write(this->_npart);
+    writeFile->write(0); // nproc
+    writeFile->writeArray<float>(this->_boundaries, 6); // min/max
+    
+    writeFile->writeVector(this->_position);
+    writeFile->writeVector(this->_velocity);
+    writeFile->writeVector(this->_id);
+    
+    writeFile->close();
 }

@@ -14,6 +14,9 @@
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
+#include <vector>
+#include <math.h>
+
 #include "FOFParticles.h"
 #include "FOFFile.h"
 #include "FOFCube.h"
@@ -143,4 +146,62 @@ void FOFParticles::skipParticles()
     this->_fortranFile->readIgnore();
     this->_fortranFile->readIgnore();
     this->_fortranFile->readIgnore();
+}
+
+/**
+ * Remove a specific particle either physically (reduced npart) or virtually (put to infinity)
+ * @param i
+ */
+void FOFParticles::removeParticle(int i, bool virtually)
+{
+    if(virtually) {
+        this->_position[i*3 + 0] = INFINITY;
+        this->_position[i*3 + 1] = INFINITY;
+        this->_position[i*3 + 2] = INFINITY;
+    }
+    else {
+        this->_position.erase(this->_position.begin()+(3*i-1), this->_position.begin()+(3*i+2));
+        this->_velocity.erase(this->_velocity.begin()+(3*i-1), this->_velocity.begin()+(3*i+2));
+        this->_id.erase(this->_id.begin()+(i-1));
+        this->_npart--;
+    }
+    
+}
+
+/**
+ * Remove particles put to infinity (rebuild the particles vector)
+ */
+void FOFParticles::removeParticleInInfinity()
+{
+    // create new vectors    
+    std::vector<float> position;
+    std::vector<float> velocity;
+    std::vector<long long> id;    
+    position.reserve(this->_npart * 3);
+    velocity.reserve(this->_npart * 3);
+    id.reserve(this->_npart);
+    
+    // put only the correct particles in it
+    for(int i=0; i<this->_npart; i++ ) {
+        if(this->_position[i*3] != INFINITY && this->_position[i*3 +1] != INFINITY && this->_position[i*3 +2] != INFINITY) {
+            position.push_back(this->_position[i*3 + 0]);
+            position.push_back(this->_position[i*3 + 1]);
+            position.push_back(this->_position[i*3 + 2]);
+            velocity.push_back(this->_velocity[i*3 + 0]);
+            velocity.push_back(this->_velocity[i*3 + 1]);
+            velocity.push_back(this->_velocity[i*3 + 2]);
+            id.push_back(this->_id[i]);
+        }
+    }
+    
+    // swap vectors
+    this->_position.swap(position);
+    this->_velocity.swap(velocity);
+    this->_id.swap(id);
+    this->_npart = this->_id.size();
+    
+    // remove the old ones
+    position.clear();
+    velocity.clear();
+    id.clear();
 }

@@ -43,6 +43,7 @@ public:
     
     // Setter
     void npart(int npart) {this->_npart = npart;}    
+    void setPos(int i, float x, float y, float z) { _position[i * 3] = x; _position[i * 3 + 1] = x; _position[i * 3 + 2] = x; }
                 
     // Enhanced getters
     float posX(int i) {return _position[i * 3];}
@@ -61,6 +62,9 @@ public:
     void readParticles(int mode = READ_POS | READ_VEL); // Read particles    
     void skipParticles();
     void releaseParticles(); // Remove particles to free memory
+    
+    void removeParticle(int i, bool virtually=false); // Remove a specific particle, if virtually=true: put it to infinity position
+    void removeParticleInInfinity(); // Remove physically particle put to infinity
     
 protected:
     int _npart;

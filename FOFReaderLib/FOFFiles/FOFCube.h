@@ -29,8 +29,13 @@ public:
     FOFCube(FortranFile<unsigned int> *_fortranFile);
     FOFCube(std::string filename, int readParticles = READ_POS | READ_VEL);
     FOFCube(const FOFCube& orig);
+    FOFCube(int npart, int generator = CONSTANT_GENERATOR);
     virtual ~FOFCube();
     
+    const static int CONSTANT_GENERATOR = 0;
+    const static int RANDOM_GENERATOR = 1;
+    const static int HOMOGENOUS_GENERATOR = 2;
+        
     // Getters
     int procid() {return _procid;}
     float *boundaries() {return _boundaries; }
@@ -47,8 +52,15 @@ public:
     // Reader   
     void readCubeFile(int readParticles = READ_POS | READ_VEL); // Open file and read cube (not multi) skip reading ids by default
     void readCube(bool skipNpart=false, int readParticles = READ_POS | READ_VEL); // Read cube from already opened file.
+    
+    // Writer
+    void writeCubeFile(std::string filename);
         
 protected:
+    void generateConstantParticles();
+    void generateRandomParticles();
+    void generateHomogeneousParticles();
+    
     int _procid;
     float *_boundaries; 
     

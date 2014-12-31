@@ -21,7 +21,7 @@
 DEUSSimulationSingleton::DEUSSimulationSingleton(std::string cubedir, std::string halodir = "")
 {    
     std::cout << "Reading cube " << cubedir << "... " << std::endl;
-    _cubes = new FOFMultiCube(cubedir);
+    _cubes = new FOFMultiCube(cubedir, FOFParticles::DONT_READ_PARTICLES);
     std::cout << "OK" << std::endl;
     std::cout << "Reading halos " << halodir << "... " << std::endl;
     _halos = new DEUSHalos(halodir);

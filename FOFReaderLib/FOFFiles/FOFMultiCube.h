@@ -49,7 +49,7 @@ public:
     
     void readMultiCubeFile(int readParticles = READ_POS | READ_VEL); // Check if dir and add
     void addMultiCubeFile(std::string filename, int readParticles = READ_POS | READ_VEL); // Open file and add cube (not multi)
-
+    
 protected:    
     std::vector<FOFCube*> _cubes;
     float minBoundaries();
