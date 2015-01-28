@@ -62,7 +62,7 @@ FOFParticles::~FOFParticles()
  * Read the particles
  * @param readIds read or skip ids (faster to skip, not ever usefuls)
  */
-void FOFParticles::readParticles(int mode)
+void FOFParticles::readParticles(int mode, bool closefile)
 {
     unsigned int len = this->_npart;
 #ifdef DEBUG_FOF    
@@ -115,7 +115,9 @@ void FOFParticles::readParticles(int mode)
          this->_fortranFile->readIgnore();
     }
     
-    this->_fortranFile->close();
+    if(closefile) {
+        this->_fortranFile->close();
+    }    
 }
 
 /**
@@ -130,7 +132,7 @@ void FOFParticles::releaseParticles()
 
 
 /**
- * Get current stream position
+ * Set current stream position
  */
 void FOFParticles::setStreampos()
 {
@@ -139,7 +141,7 @@ void FOFParticles::setStreampos()
 }
 
 /**
- * Skip Particles by reading the 3 fiels
+ * Skip Particles by reading the 3 fields
  */
 void FOFParticles::skipParticles()
 {

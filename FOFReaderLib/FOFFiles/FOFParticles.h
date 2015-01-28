@@ -59,7 +59,7 @@ public:
     
 // Reader    
     void setStreampos();
-    void readParticles(int mode = READ_POS | READ_VEL); // Read particles    
+    void readParticles(int mode = READ_POS | READ_VEL, bool closefile = true); // Read particles, close file after by default
     void skipParticles();
     void releaseParticles(); // Remove particles to free memory
     

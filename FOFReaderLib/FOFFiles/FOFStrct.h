@@ -27,7 +27,7 @@ class FOFStrct : protected FOFFile
 public:
     FOFStrct();
     FOFStrct(const FOFStrct& orig);
-    FOFStrct(std::string filename, bool readIds=false, bool readParticles=true);
+    FOFStrct(std::string filename, int readParticles = FOFParticles::READ_POS | FOFParticles::READ_VEL);
     virtual ~FOFStrct();
     
     // Getters
@@ -36,8 +36,8 @@ public:
     FOFParticles* halos(int i) {return _halos[i];}
     
     // Reader   
-    void readStrctFile(bool readIds=false, bool readParticles=true); // Open file and read strct
-    void addStrctFile(std::string filename, bool readIds=false, bool readParticles=true);
+    void readStrctFile(int readParticles = FOFParticles::READ_POS | FOFParticles::READ_VEL); // Open file and read strct
+    void addStrctFile(std::string filename, int readParticles = FOFParticles::READ_POS | FOFParticles::READ_VEL);
     
 protected:
     int _nHalos;

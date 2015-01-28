@@ -52,11 +52,12 @@ void FOFMultiCube::readMultiCubeFile(int readParticles)
         int nCubes = 0;
         
         nCubes = this->openAndReadFirstInt();
-                
-        if(nCubes > 0) { // Not a multicube file
+        
+        if(nCubes >= 0) { // Not a multicube file
             this->_cubes.reserve(this->nCubes() + 1);
             FOFCube *myCube = new FOFCube(this->_fortranFile);
             myCube->npart(nCubes);
+            
             myCube->readCube(true, readParticles);
             this->_cubes.push_back(myCube);
             this->close();

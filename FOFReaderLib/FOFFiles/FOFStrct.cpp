@@ -24,10 +24,10 @@ FOFStrct::FOFStrct(const FOFStrct& orig)
 {
 }
 
-FOFStrct::FOFStrct(std::string filename, bool readIds, bool readParticles)
+FOFStrct::FOFStrct(std::string filename, int readParticles)
 {
     this->_filename = filename;
-    this->readStrctFile(readIds, readParticles);
+    this->readStrctFile(readParticles);
 }
 
 FOFStrct::~FOFStrct()
@@ -35,13 +35,13 @@ FOFStrct::~FOFStrct()
     while (!this->_halos.empty()) delete this->_halos.back(), this->_halos.pop_back();
 }
 
-void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and read strct
+void FOFStrct::readStrctFile(int readParticles) // Open file and read strct
 {
     if (this->isDir()) {
         std::vector<std::string> files;
         this->getFilesFromDir("strct", &files);
         for (unsigned int i = 0; i < files.size(); i++) {
-            addStrctFile(files[i], false, false); // Never read particles from a directory !
+            addStrctFile(files[i], FOFParticles::DONT_READ_PARTICLES); // Never read particles from a directory !
         }
     }
     else {
@@ -53,9 +53,12 @@ void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and 
             int npart;
             this->_fortranFile->read(npart);
             myHalo->npart(npart);
+            
+            std::cout << "Found " << npart << " particles" << std::endl;
+            
             if (npart > 0) {
                 if (readParticles) {
-                    myHalo->readParticles(readIds);
+                    myHalo->readParticles(readParticles, false);
                 }
                 else {
                     myHalo->skipParticles();
@@ -69,7 +72,7 @@ void FOFStrct::readStrctFile(bool readIds, bool readParticles) // Open file and 
 
 // Open file and read cube (not multi)
 
-void FOFStrct::addStrctFile(std::string filename, bool readIds, bool readParticles)
+void FOFStrct::addStrctFile(std::string filename, int readParticles)
 {
 #ifdef DEBUG_FOF
     std::cout << "Adding " << filename << std::endl;
@@ -77,7 +80,7 @@ void FOFStrct::addStrctFile(std::string filename, bool readIds, bool readParticl
     try {
         FOFStrct *multi;
 
-        multi = new FOFStrct(filename, readIds, readParticles);
+        multi = new FOFStrct(filename, readParticles);
 
         this->_halos.reserve(this->nHalos() + multi->nHalos());
         for (int i = 0; i < multi->nHalos(); i++) {

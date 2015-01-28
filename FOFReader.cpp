@@ -52,16 +52,16 @@ int main(int argc, char** argv)
                     multi.cubes(i)->releaseParticles(); // Now we can release to free memory
                     
                     //multi.cubes(i)->readParticles(true);
-                    for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
-                        cout << "   Particle " << j << ": "
+                    for(int j=0; j< multi.cubes(i)->npart(); j++) {                    
+                        if(multi.cubes(i)->id(j) == 202075283) {
+				cout << "   Particle " << j << ": "
                             << "id: " << multi.cubes(i)->id(j) << " "
                             << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
                             << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
                             << endl;
-                    }  
-                    if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
-                            cout << "   (...) " << endl;
-                    }
+}
+                    } 
+			multi.cubes(i)->readParticles(true); 
                     
                 }
                           
@@ -79,7 +79,7 @@ int main(int argc, char** argv)
         case 1: 
         {
             cout << "Reading strct " << argv[1] << endl;            
-            FOFStrct strct(argv[1], true);
+            FOFStrct strct(argv[1], FOFParticles::READ_ALL);
             int maxHaloToDisplay = strct.nHalos();//5;
             for(int i=0; i<maxHaloToDisplay; i++) {
                 cout << "HALO " << i << ": " 

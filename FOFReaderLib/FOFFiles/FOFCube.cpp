@@ -138,7 +138,7 @@ void FOFCube::readCube(bool skipNpart, int readParticles)
     }
     
     this->_fortranFile->read(this->_procid);                    
-
+        
     this->_boundaries = new float[6];
     this->_fortranFile->readArray<float>(this->_boundaries, len); // min/max
     assert(len == 6);
