@@ -78,10 +78,10 @@ int main(int argc, char** argv)
          */
         case 1: 
         {
-            cout << "Reading strct " << argv[1] << endl;            
+            cout << "Reading strct " << argv[1] << endl;
             FOFStrct strct(argv[1], FOFParticles::READ_ALL);
-            int maxHaloToDisplay = strct.nHalos();//5;
-            for(int i=0; i<maxHaloToDisplay; i++) {
+            int maxHaloToDisplay = 5;
+            for(int i=0; i<min(maxHaloToDisplay,strct.nHalos()); i++) {
                 cout << "HALO " << i << ": " 
                         << strct.halos(i)->npart() << " particles"                        
                         << endl;
@@ -101,8 +101,10 @@ int main(int argc, char** argv)
         {
             cout << "Reading masst " << argv[1] << endl;
             FOFMasst masst(argv[1]);
+            cout << "OK" << endl;
+            cout << "Read " << masst.nHalos() << endl;
             int maxHaloToDisplay = 5;
-            for(int i=0; i<maxHaloToDisplay; i++) {
+            for(int i=0; i<min(maxHaloToDisplay,masst.nHalos()); i++) {
                 cout << "HALO " << i << ": " 
                         << "id:" << masst.halos(i)->id() << " "                        
                         << masst.halos(i)->mass() << " particles"                        
@@ -120,10 +122,10 @@ int main(int argc, char** argv)
         {
             cout << "Reading Halo dir " << argv[1] << endl;
             DEUSHalos simulation(argv[1]);
-            int maxHaloToDisplay = 5;
-            int randomHalo = 13; //1651288; //1651288;
+            long long int maxHaloToDisplay = 5;
+            int randomHalo = 1; //1651288; //1651288;
             
-            for(int i=0; i<maxHaloToDisplay; i++) {
+            for(int i=0; i<min(maxHaloToDisplay,simulation.nHalos()); i++) {
                     cout << "  HALO " << i << ": "                             
                             << simulation.halos(i)->mass() << " particles"                        
                             << " center: (" 
@@ -134,24 +136,25 @@ int main(int argc, char** argv)
             }
             cout << "TOTAL SIMULATION " << simulation.nFiles() << " files, " << simulation.nHalos() << " halos" << endl;
             
-            cout << "RANDOM HALO : " << randomHalo << endl;
-                       
-            simulation.loadParticles(randomHalo, FOFParticles::READ_ALL);
-            FOFParticles *haloParticles = simulation.halos(randomHalo)->particles();
-            
-            for(int j=0; j<haloParticles->npart(); j++) {
-                cout << "   Particle " << j << ": "               
-                            << "id: (" << haloParticles->id(j) << ") "
-                            << "position: (" << haloParticles->posX(j) << "," << haloParticles->posY(j) << "," << haloParticles->posZ(j) << ") "
-                            << "velocity (" << haloParticles->velX(j) << "," << haloParticles->velY(j) << "," << haloParticles->velZ(j) << ")"
-                            << endl;
-            }
-            float *haloVelocity = new float[3];
-            simulation.halos(randomHalo)->calculateAvgVelocity(haloVelocity);
-            cout << "   Halo Velocity "  
-                            << " (" << haloVelocity[0] << "," << haloVelocity[1] << "," << haloVelocity[2] << ")"
-                    << endl;
-            
+            if(simulation.nHalos() >= randomHalo) {
+                cout << "SELECTED HALO : " << randomHalo << endl;
+
+                simulation.loadParticles(randomHalo, FOFParticles::READ_ALL);
+                FOFParticles *haloParticles = simulation.halos(randomHalo)->particles();
+
+                for(int j=0; j<haloParticles->npart(); j++) {
+                    cout << "   Particle " << j << ": "               
+                                << "id: (" << haloParticles->id(j) << ") "
+                                << "position: (" << haloParticles->posX(j) << "," << haloParticles->posY(j) << "," << haloParticles->posZ(j) << ") "
+                                << "velocity (" << haloParticles->velX(j) << "," << haloParticles->velY(j) << "," << haloParticles->velZ(j) << ")"
+                                << endl;
+                }
+                float *haloVelocity = new float[3];
+                simulation.halos(randomHalo)->calculateAvgVelocity(haloVelocity);
+                cout << "   Halo Velocity "  
+                                << " (" << haloVelocity[0] << "," << haloVelocity[1] << "," << haloVelocity[2] << ")"
+                        << endl;
+            }            
             break;
         }
         /* 

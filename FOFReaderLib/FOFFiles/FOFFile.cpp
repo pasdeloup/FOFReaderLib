@@ -58,9 +58,10 @@ int FOFFile::openAndReadFirstInt(std::string filename, FortranFile<unsigned int>
     } catch (const std::ios_base::failure& e) {
         fortranFile->close();
         fortranFile->openRead(filename);
-        fortranFile->setEndianness(true);
+        fortranFile->setEndianness(true);        
         fortranFile->read(value);
-    }
+        std::cout << "Switched to Big Endian" << std::endl;
+    }    
     return value;
 }
 
@@ -81,6 +82,7 @@ int FOFFile::openAndReadFirstArray(int *&value, std::string filename, FortranFil
         fortranFile->openRead(filename);
         fortranFile->setEndianness(true);
         fortranFile->readArray(value, len);
+        std::cout << "Switched to Big Endian" << std::endl;
     }
     return len;
 }
