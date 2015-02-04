@@ -6,3 +6,5 @@ FOFReader
 getBiggestHalo
 exportMasst
 generateImage
+generateRandomCube
+FOFGetFiles

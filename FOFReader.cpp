@@ -209,7 +209,7 @@ int main(int argc, char** argv)
      * USAGE
      */
     else {
-        cout << "Usage : fofReader <file> <format> \r\n"
+        cout << "Usage : FOFReader <file> <format> \r\n"
                 "    Formats: \r\n"
                 "        0: FOF Cube/Multicube\r\n"
                 "        1: FOF Struct\r\n"

@@ -48,6 +48,9 @@ public:
     // Check if current file is a dir or a real file
     bool isDir();
     
+    // Get File name
+    std::string getFilename() {return this->_filename;};
+    
     // Get the files containing a string in a vector
     bool getFilesFromDir(std::string type, std::vector<std::string> *files);
     

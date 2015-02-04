@@ -39,7 +39,8 @@ public:
     int npart() {return _npart;}    
     std::vector<float> position() {return _position;}
     std::vector<float> velocity() {return _velocity;}
-    std::vector<long long int> id() {return _id;}
+    std::vector<long long int> id() {return _id;}    
+    std::string getFilename() {return this->_filename;};
     
     // Setter
     void npart(int npart) {this->_npart = npart;}    

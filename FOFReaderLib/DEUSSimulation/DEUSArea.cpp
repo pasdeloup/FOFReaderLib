@@ -165,10 +165,11 @@ void DEUSArea::calculateShift()
 bool DEUSArea::particuleIsInside(float &X, float &Y, float &Z)
 {
     float coords[3] = {X,Y,Z};
+    int nbShift = this->_periodicity == 0.0f ? 1 : 2;  
     bool res = true;
     for(int pos=0; pos<3; pos++) {
         bool subres = false;
-        for(int shift=0; shift<2; shift++) {            
+        for(int shift=0; shift<nbShift; shift++) {            
             bool subsubres = coords[pos] < this->coords(shift,pos, 1) && coords[pos] > this->coords(shift,pos, 0);
             if(subsubres) {
                 coords[pos] += this->shift(shift, pos);
@@ -185,14 +186,18 @@ bool DEUSArea::particuleIsInside(float &X, float &Y, float &Z)
 
 bool DEUSArea::intersectArea(DEUSArea area)
 {
+    int nbShift = this->_periodicity == 0.0f ? 1 : 2;    
+    
     bool res = true;
     for(int pos=0; pos<3; pos++) {
         bool subres = false;
-        for(int shift=0; shift<2; shift++) {
-            for(int shift2=0; shift2<2; shift2++) {
+        for(int shift=0; shift<nbShift; shift++) {
+            for(int shift2=0; shift2<nbShift; shift2++) {
+                //std::cout << (this->coords(shift, pos, 0) < area.coords(shift2,pos, 1) && this->coords(shift, pos, 1) > area.coords(shift2,pos, 0)) << " ";
                 subres |= this->coords(shift, pos, 0) < area.coords(shift2,pos, 1) && this->coords(shift, pos, 1) > area.coords(shift2,pos, 0);
             }
         }
+        //std::cout << "=> " << subres << std::endl;
         res &= subres;
     }    
     return res;    
