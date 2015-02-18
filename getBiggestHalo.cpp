@@ -1,9 +1,19 @@
-/* 
- * File:   main.cpp
- * Author: jpasdeloup
- *
- * Created on 5 février 2013, 15:24
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFReaderLib
+// DESCRIPTION :    Find biggests halos of a simulation
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFReaderLib.h
+/// \brief          Find biggests halos of a simulation
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string>
@@ -14,6 +24,7 @@
 #include <unistd.h>
 #include <vector>
 #include <algorithm>    // std::sort
+
 #include "FOFReaderLib/FOFReaderLib.h"
 
 using namespace std;

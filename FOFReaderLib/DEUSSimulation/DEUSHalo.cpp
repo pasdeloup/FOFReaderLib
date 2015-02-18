@@ -1,20 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          DEUSHalo
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Single halo value object
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           DEUSHalo.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          Single halo value object
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-/// \date           2013
+/// \date           2014
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "DEUSHalo.h"
+#include "../FOFReaderLib.h"
 
 DEUSHalo::DEUSHalo()
 {

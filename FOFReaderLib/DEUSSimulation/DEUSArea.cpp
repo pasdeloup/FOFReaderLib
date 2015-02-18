@@ -1,23 +1,24 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          DEUSArea
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Tools to manage areas
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           DEUSArea.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          Tools to manage areas
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-/// \date           2013
+/// \date           2014
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "DEUSArea.h"
 #include <iostream>
 #include <math.h> 
 #include <algorithm> 
+
+#include "../FOFReaderLib.h"
 
 DEUSArea::DEUSArea()
 {    

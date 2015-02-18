@@ -1,14 +1,14 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFHalo
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Halo simple value object
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFHalo.h
-/// \brief          Mesh cells integrating particles
+/// \brief          Halo simple value object
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License

@@ -1,9 +1,18 @@
-/* 
- * File:   FOFCubeGravLevel.h
- * Author: jpasdeloup
- *
- * Created on June 18, 2014, 2:48 PM
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFCubeGravLevel
+// DESCRIPTION :    FOF Cubegrav level management, used by FOFCubeGrav
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFCubeGravLevel.h
+/// \brief          FOF Cubegrav level management, used by FOFCubeGrav
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #ifndef FOFCUBEGRAVLEVEL_H
 #define	FOFCUBEGRAVLEVEL_H

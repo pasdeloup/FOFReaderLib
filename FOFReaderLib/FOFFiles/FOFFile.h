@@ -1,14 +1,14 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFFile
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Low level FOFFile management, extended by other classes
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFFile.h
-/// \brief          Mesh cells integrating particles
+/// \brief          Low level FOFFile management, extended by other classes
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License

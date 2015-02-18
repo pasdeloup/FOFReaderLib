@@ -1,9 +1,18 @@
-/* 
- * File:   generateImage.cpp
- * Author: jpasdeloup
- *
- * Created on June 18, 2014, 6:08 PM
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFReaderLib
+// DESCRIPTION :    Image generation from gravity files
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFReaderLib.h
+/// \brief          Image generation from gravity files
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #include <cstdlib>
 #include <fstream>

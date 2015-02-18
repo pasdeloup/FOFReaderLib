@@ -1,14 +1,14 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFMultiCube
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    FOF MultiCube file management
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFMultiCube.h
-/// \brief          Mesh cells integrating particles
+/// \brief          FOF MultiCube file management
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License

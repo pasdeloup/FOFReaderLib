@@ -1,9 +1,18 @@
-/* 
- * FOF Reader Lib
- * Usage sample
- * Author: jpasdeloup
- * Created on 1 octobre 2013, 16:22
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFReaderLib
+// DESCRIPTION :    Main FOFReaderLib example, try to read all formats
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFReaderLib.h
+/// \brief          Main FOFReaderLib example, try to read all formats
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #include "FOFReaderLib/FOFReaderLib.h"
 
@@ -13,7 +22,7 @@ using namespace std;
  * Usage sample
  */
 int main(int argc, char** argv)
-{    
+{  
     if (argc == 3) { // If correct number of args
         
         switch (atoi(argv[2])) {            

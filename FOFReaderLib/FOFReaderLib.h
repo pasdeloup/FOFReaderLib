@@ -1,12 +1,29 @@
-/* 
- * File:   FOFReaderLib.h
- * Author: admin
- *
- * Created on 8 octobre 2013, 12:26
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFReaderLib
+// DESCRIPTION :    Global include file
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFReaderLib.h
+/// \brief          Global include file
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #ifndef FOFREADERLIB_H
 #define	FOFREADERLIB_H
+
+// Switch to make FOFReaderLib verbose: 
+//   display Big Endian mode
+//   display unreadable files when reading directories
+//#define FOF_VERBOSE   
+
+// Switch to Debug mode, add a lot of notifications when running
+//#define FOF_DEBUG
 
 #include "FOFFiles/FOFFile.h"
 #include "FOFFiles/FOFCube.h"

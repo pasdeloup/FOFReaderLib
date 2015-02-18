@@ -1,17 +1,24 @@
-/* 
- * File:   generateImage.cpp
- * Author: jpasdeloup
- *
- * Created on June 18, 2014, 6:08 PM
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFReaderLib
+// DESCRIPTION :    Cube generator with random data
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFReaderLib.h
+/// \brief          Cube generator with random data
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
 #include <random>
 #include <vector>
-
-#define DEBUG_FOF
 
 #include "FOFReaderLib/FOFReaderLib.h"
 

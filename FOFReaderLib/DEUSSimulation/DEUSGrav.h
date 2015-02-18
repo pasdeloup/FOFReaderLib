@@ -1,9 +1,18 @@
-/* 
- * File:   DEUSGrav.h
- * Author: jpasdeloup
- *
- * Created on June 25, 2014, 2:20 PM
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          DEUSGrav
+// DESCRIPTION :    Tools to manage grav full directory
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           DEUSGrav.h
+/// \brief          Tools to manage grav full directory
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2014
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #ifndef DEUSGRAV_H
 #define	DEUSGRAV_H

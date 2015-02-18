@@ -1,14 +1,14 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFParticles
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Intermediate class for formats managing particles
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFParticles.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          Intermediate class for formats managing particles
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
@@ -17,9 +17,7 @@
 #include <vector>
 #include <math.h>
 
-#include "FOFParticles.h"
-#include "FOFFile.h"
-#include "FOFCube.h"
+#include "../FOFReaderLib.h"
 
 FOFParticles::FOFParticles()
 {
@@ -65,7 +63,7 @@ FOFParticles::~FOFParticles()
 void FOFParticles::readParticles(int mode, bool closefile)
 {
     unsigned int len = this->_npart;
-#ifdef DEBUG_FOF    
+#ifdef FOF_DEBUG    
     std::cout << "Len = " << len << std::endl;
 #endif
     
@@ -74,7 +72,7 @@ void FOFParticles::readParticles(int mode, bool closefile)
     }
     
     if(this->_streampos > 0) {
-#ifdef DEBUG_FOF        
+#ifdef FOF_DEBUG        
         std::cout << "Seeking to " << _streampos << std::endl;
 #endif
         this->_fortranFile->readStream()->seekg(this->_streampos);

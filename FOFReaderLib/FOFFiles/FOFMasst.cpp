@@ -1,21 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFMasst
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    FOF Masst file management
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFMasst.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          FOF Masst file management
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFMasst.h"
-#include "FOFFile.h"
+#include "../FOFReaderLib.h"
 
 FOFMasst::FOFMasst()
 {
@@ -75,7 +74,7 @@ void FOFMasst::readMasstFile() // Open file and read masst
 
 void FOFMasst::addMasstFile(std::string filename) // Open file and read masst
 {
-#ifdef DEBUG_FOF    
+#ifdef FOF_DEBUG    
     std::cout << "Adding " << filename << std::endl;
 #endif
     FOFMasst *multi;
@@ -91,7 +90,9 @@ void FOFMasst::addMasstFile(std::string filename) // Open file and read masst
         this->_nHalos = this->_halos.size();
     }
     catch (const std::ios_base::failure& e) {
+#ifdef FOF_VERBOSE
         std::cerr << "Can't read " << filename << std::endl;
+#endif
     }
 }
 

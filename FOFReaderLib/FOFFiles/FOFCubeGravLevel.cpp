@@ -1,11 +1,20 @@
-/* 
- * File:   FOFCubeGravLevel.cpp
- * Author: jpasdeloup
- * 
- * Created on June 18, 2014, 2:48 PM
- */
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFCubeGravLevel
+// DESCRIPTION :    FOF Cubegrav level management, used by FOFCubeGrav
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFCubeGravLevel.cpp
+/// \brief          FOF Cubegrav level management, used by FOFCubeGrav
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFCubeGravLevel.h"
+#include "../FOFReaderLib.h"
 
 FOFCubeGravLevel::FOFCubeGravLevel() 
 {
@@ -29,7 +38,7 @@ FOFCubeGravLevel::~FOFCubeGravLevel()
 void FOFCubeGravLevel::readLevel()  // Read level from already opened file.
 { 
     unsigned int len = this->_nCells;
-#ifdef DEBUG_FOF    
+#ifdef FOF_DEBUG    
     std::cout << "Len = " << len << std::endl;
 #endif
     

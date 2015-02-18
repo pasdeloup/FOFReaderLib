@@ -1,16 +1,16 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
-// TITLE :          DEUSCube
-// DESCRIPTION :    Mesh cells integrating particles
+// PROJECT :        FOFReaderLib
+// TITLE :          DEUSCubes
+// DESCRIPTION :    Tools to manage cubes
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
-/// \file           DEUSCube.h
-/// \brief          Mesh cells integrating particles
+/// \file           DEUSCubes.h
+/// \brief          Tools to manage cubes
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-/// \date           2013
+/// \date           2014
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 

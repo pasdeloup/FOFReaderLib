@@ -1,16 +1,16 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          DEUSHalos
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Tools to manage halos using masst + strct
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           DEUSHalos.h
-/// \brief          Mesh cells integrating particles
+/// \brief          Tools to manage halos using masst + strct
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-/// \date           2013
+/// \date           2014
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 

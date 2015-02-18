@@ -1,14 +1,14 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFParticles
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Intermediate class for formats managing particles
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFParticles.h
-/// \brief          Mesh cells integrating particles
+/// \brief          Intermediate class for formats managing particles
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License

@@ -1,20 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFHalo
-// DESCRIPTION :    FOF Halo
+// DESCRIPTION :    Halo simple value object
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFHalo.cpp
-/// \brief          FOF Halo
+/// \brief          Halo simple value object
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFHalo.h"
+#include "../FOFReaderLib.h"
 
 FOFHalo::FOFHalo()
 {

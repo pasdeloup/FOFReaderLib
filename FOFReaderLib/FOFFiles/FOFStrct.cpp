@@ -1,20 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFStrct
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    FOF Strct file management
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFStrct.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          FOF Strct file management
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFStrct.h"
+#include "../FOFReaderLib.h"
 
 FOFStrct::FOFStrct()
 {
@@ -53,8 +53,9 @@ void FOFStrct::readStrctFile(int readParticles) // Open file and read strct
             int npart;
             this->_fortranFile->read(npart);
             myHalo->npart(npart);
-            
+#ifdef FOF_DEBUG
             std::cout << "Found " << npart << " particles" << std::endl;
+#endif
             
             if (npart > 0) {
                 if (readParticles) {
@@ -74,7 +75,7 @@ void FOFStrct::readStrctFile(int readParticles) // Open file and read strct
 
 void FOFStrct::addStrctFile(std::string filename, int readParticles)
 {
-#ifdef DEBUG_FOF
+#ifdef FOF_DEBUG
     std::cout << "Adding " << filename << std::endl;
 #endif
     try {
@@ -88,7 +89,9 @@ void FOFStrct::addStrctFile(std::string filename, int readParticles)
         }
     }
     catch (const std::ios_base::failure& e) {
+#ifdef FOF_VERBOSE        
         std::cerr << "Can't read " << filename << std::endl;
+#endif
     }
 }
 

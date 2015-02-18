@@ -1,13 +1,22 @@
-/* 
- * File:   FOFCubeGrav.cpp
- * Author: jpasdeloup
- * 
- * Created on June 18, 2014, 2:34 PM
- */
-
-#include "FOFCubeGrav.h"
+/* ************************** FOFReaderLib ********************************** */
+/*////////////////////////////////////////////////////////////////////////////*/
+// PROJECT :        FOFReaderLib
+// TITLE :          FOFCubeGrav
+// DESCRIPTION :    FOF Cubegrav file management
+// AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// LICENSE :        CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
+/// \file           FOFCubeGrav.cpp
+/// \brief          FOF Cubegrav file management
+/// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
+/// \date           2013
+/// \copyright      CECILL-B License
+/*////////////////////////////////////////////////////////////////////////////*/
 
 #include <cassert>
+
+#include "../FOFReaderLib.h"
 
 FOFCubeGrav::FOFCubeGrav(std::string filename)
 { 

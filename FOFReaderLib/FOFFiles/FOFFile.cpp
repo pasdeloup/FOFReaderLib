@@ -1,23 +1,24 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        FOF_READER_LIB
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFFile
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Low level FOFFile management, extended by other classes
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFFile.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          Low level FOFFile management, extended by other classes
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFFile.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+
+#include "../FOFReaderLib.h"
 
 FOFFile::FOFFile()
 {
@@ -60,7 +61,9 @@ int FOFFile::openAndReadFirstInt(std::string filename, FortranFile<unsigned int>
         fortranFile->openRead(filename);
         fortranFile->setEndianness(true);        
         fortranFile->read(value);
+#ifdef FOF_VERBOSE
         std::cout << "Switched to Big Endian" << std::endl;
+#endif
     }    
     return value;
 }
@@ -82,7 +85,9 @@ int FOFFile::openAndReadFirstArray(int *&value, std::string filename, FortranFil
         fortranFile->openRead(filename);
         fortranFile->setEndianness(true);
         fortranFile->readArray(value, len);
+#ifdef FOF_VERBOSE        
         std::cout << "Switched to Big Endian" << std::endl;
+#endif
     }
     return len;
 }

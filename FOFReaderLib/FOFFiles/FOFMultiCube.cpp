@@ -1,23 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          FOFMultiCube
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    FOF MultiCube file management
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 // CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           FOFMultiCube.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          FOF MultiCube file management
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
 /// \date           2013
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "FOFMultiCube.h"
-#include "FOFCube.h"
-#include "FOFFile.h"
-#include "fortranfile.h"
+#include "../FOFReaderLib.h"
 
 FOFMultiCube::FOFMultiCube()
 {
@@ -70,12 +67,12 @@ void FOFMultiCube::readMultiCubeFile(int readParticles)
             std::streamoff endFileOffset = this->_fortranFile->readStream()->tellg();
             // Go back to first cube
             this->_fortranFile->readStream()->seekg (firstCubeOffset);
-#ifdef DEBUG_FOF                        
+#ifdef FOF_DEBUG                        
             std::cout << "Multicube" << std::endl;
 #endif                 
             int i=0;
             while(this->_fortranFile->readStream()->tellg() < endFileOffset) {
-#ifdef DEBUG_FOF
+#ifdef FOF_DEBUG
                 std::cout << "Reading cube " << i << std::endl;
 #endif
                 FOFCube *myCube = new FOFCube(this->_fortranFile);
@@ -93,7 +90,7 @@ void FOFMultiCube::readMultiCubeFile(int readParticles)
 // Open file and read cube (not multi)
 void FOFMultiCube::addMultiCubeFile(std::string filename, int readParticles)
 {   
-#ifdef DEBUG_FOF
+#ifdef FOF_DEBUG
     std::cout << "Adding " << filename << std::endl;
 #endif
     FOFMultiCube *multi;
@@ -107,7 +104,9 @@ void FOFMultiCube::addMultiCubeFile(std::string filename, int readParticles)
         }    
     }
     catch (const std::ios_base::failure& e) {
+#ifdef FOF_VERBOSE        
         std::cerr << "Can't read " << filename << std::endl;
+#endif
     }    
 }
 

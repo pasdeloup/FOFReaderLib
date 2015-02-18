@@ -1,22 +1,20 @@
-/* ********************************** CELL ********************************** */
+/* ************************** FOFReaderLib ********************************** */
 /*////////////////////////////////////////////////////////////////////////////*/
-// PROJECT :        DEUS_SERVER
+// PROJECT :        FOFReaderLib
 // TITLE :          DEUSSimulationSingleton
-// DESCRIPTION :    Mesh cells integrating particles
+// DESCRIPTION :    Full simulation management ie cubes + halos with singleton
 // AUTHOR(S) :      Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-// CONTRIBUTIONS :  [Jean Pasdeloup (2013)]
+// CONTRIBUTIONS :  [Jean Pasdeloup (2014)]
 // LICENSE :        CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 /// \file           DEUSSimulationSingleton.cpp
-/// \brief          Mesh cells integrating particles
+/// \brief          Full simulation management ie cubes + halos with singleton
 /// \author         Jean Pasdeloup (jean.pasdeloup@obspm.fr)
-/// \date           2013
+/// \date           2014
 /// \copyright      CECILL-B License
 /*////////////////////////////////////////////////////////////////////////////*/
 
-#include "DEUSSimulationSingleton.h"
-
-#define DEBUG_FOF
+#include "../FOFReaderLib.h"
 
 DEUSSimulationSingleton::DEUSSimulationSingleton(std::string cubedir, std::string halodir = "")
 {    
@@ -39,13 +37,13 @@ DEUSSimulationSingleton::~DEUSSimulationSingleton()
 DEUSSimulationSingleton *DEUSSimulationSingleton::getInstance(std::string cubedir, std::string halodir)
 {
     if (NULL == _instance) {
-#ifdef DEBUG_FOF  
+#ifdef FOF_DEBUG  
         std::cout << "creating singleton." << std::endl;
 #endif
         _instance = new DEUSSimulationSingleton(cubedir, halodir);
     }
     else {
-#ifdef DEBUG_FOF  
+#ifdef FOF_DEBUG  
         std::cout << "singleton already created!" << std::endl;
 #endif
     }
