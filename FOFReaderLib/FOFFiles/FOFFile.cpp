@@ -96,7 +96,9 @@ bool FOFFile::isDir()
 {
     DIR *Dir;
     Dir = opendir(this->_filename.c_str());
-    return (Dir != NULL);        
+    bool res = (Dir != NULL);
+    closedir(Dir);
+    return (res);
 }
             
 bool FOFFile::getFilesFromDir(std::string type, std::vector<std::string> *files)
@@ -111,7 +113,8 @@ bool FOFFile::getFilesFromDir(std::string type, std::vector<std::string> *files)
             if (contains(DirEntry->d_name,type)) {
                 files->push_back(this->_filename + "/" + DirEntry->d_name);
             }
-    }    
+    }
+    closedir(Dir);
     return true;
 }
 
