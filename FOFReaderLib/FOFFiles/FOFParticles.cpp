@@ -26,6 +26,7 @@ FOFParticles::FOFParticles()
 FOFParticles::FOFParticles(FortranFile<unsigned int> *fortranFile)
 {
     this->_fortranFile = fortranFile;
+    this->_filename = fortranFile->name();
     this->_fortranFileMaster = false;
     this->_streampos = 0;
 }
@@ -68,6 +69,7 @@ void FOFParticles::readParticles(int mode, bool closefile)
 #endif
     
     if(!this->_fortranFile->readStream()->is_open()) {
+        std::cout << "Reopen " << this->_filename << std::endl;
         this->_fortranFile->openRead(this->_filename);
     }
     
@@ -104,13 +106,20 @@ void FOFParticles::readParticles(int mode, bool closefile)
 
     if(mode & READ_IDS) {
         this->_id.reserve(len);
-        this->_fortranFile->readVector(this->_id, false);
-        if (this->_id.size() != len) {
-            throw std::ios_base::failure("ERROR : FOFParticles read id len");            
+        try {
+            this->_fortranFile->readVector(this->_id, false);
+            if (this->_id.size() != len) {
+                throw std::ios_base::failure("ERROR : FOFParticles read id len");            
+            }
         }
+        catch (const std::ios_base::failure& e) {
+#ifdef FOF_VERBOSE        
+            std::cerr << "Can't read ids" << std::endl;
+#endif
+        }   
     }
     else {
-         this->_fortranFile->readIgnore();
+         //this->_fortranFile->readIgnore();
     }
     
     if(closefile) {
@@ -145,7 +154,11 @@ void FOFParticles::skipParticles()
 {
     this->_fortranFile->readIgnore();
     this->_fortranFile->readIgnore();
-    this->_fortranFile->readIgnore();
+    try {
+        this->_fortranFile->readIgnore();
+    }
+    catch (const std::ios_base::failure& e) {
+    }      
 }
 
 /**

@@ -37,7 +37,7 @@ int main(int argc, char** argv)
             int maxDetailCubeToDisplay = 2;
             
             FOFMultiCube multi(argv[1], FOFParticles::DONT_READ_PARTICLES); // don't use default, don't read particles just header
-            
+                        
             for(int i=0; i<multi.nCubes(); i++) {                            
                           
                     cout << "Cube " << i << ": " 
@@ -59,19 +59,6 @@ int main(int argc, char** argv)
                             cout << "   (...) " << endl;
                     }
                     multi.cubes(i)->releaseParticles(); // Now we can release to free memory
-                    
-                    //multi.cubes(i)->readParticles(true);
-                    for(int j=0; j< multi.cubes(i)->npart(); j++) {                    
-                        if(multi.cubes(i)->id(j) == 202075283) {
-				cout << "   Particle " << j << ": "
-                            << "id: " << multi.cubes(i)->id(j) << " "
-                            << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
-                            << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
-                            << endl;
-}
-                    } 
-			multi.cubes(i)->readParticles(true); 
-                    
                 }
                           
             }
@@ -88,14 +75,16 @@ int main(int argc, char** argv)
         case 1: 
         {
             cout << "Reading strct " << argv[1] << endl;
-            FOFStrct strct(argv[1], FOFParticles::READ_ALL);
+            FOFStrct strct(argv[1], FOFParticles::DONT_READ_PARTICLES);
             int maxHaloToDisplay = 5;
             for(int i=0; i<min(maxHaloToDisplay,strct.nHalos()); i++) {
                 cout << "HALO " << i << ": " 
                         << strct.halos(i)->npart() << " particles"                        
                         << endl;
                 if(i==0) {
+                    strct.halos(i)->readParticles(FOFParticles::READ_ALL);
                     cout << "1st part of 1st halo: ID=" << strct.halos(i)->id(0)
+                        << " position: (" << strct.halos(i)->posX(0) << "," << strct.halos(i)->posY(0) << "," << strct.halos(i)->posZ(0) << ") "
                         << endl;
                 }
             }            

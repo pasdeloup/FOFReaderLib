@@ -52,6 +52,7 @@ void FOFStrct::readStrctFile(int readParticles) // Open file and read strct
             FOFParticles *myHalo = new FOFParticles(this->_fortranFile);
             int npart;
             this->_fortranFile->read(npart);
+            myHalo->setStreampos();
             myHalo->npart(npart);
 #ifdef FOF_DEBUG
             std::cout << "Found " << npart << " particles" << std::endl;
@@ -82,8 +83,10 @@ void FOFStrct::addStrctFile(std::string filename, int readParticles)
         FOFStrct *multi;
 
         multi = new FOFStrct(filename, readParticles);
+        
+        this->_nHalos += multi->nHalos();
 
-        this->_halos.reserve(this->nHalos() + multi->nHalos());
+        this->_halos.reserve(this->nHalos());
         for (int i = 0; i < multi->nHalos(); i++) {
             this->_halos.push_back(multi->halos(i));
         }
