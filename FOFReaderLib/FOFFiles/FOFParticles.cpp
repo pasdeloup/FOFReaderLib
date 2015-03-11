@@ -69,7 +69,6 @@ void FOFParticles::readParticles(int mode, bool closefile)
 #endif
     
     if(!this->_fortranFile->readStream()->is_open()) {
-        std::cout << "Reopen " << this->_filename << std::endl;
         this->_fortranFile->openRead(this->_filename);
     }
     
