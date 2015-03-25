@@ -52,7 +52,7 @@ void FOFMultiCube::readMultiCubeFile(int readParticles)
         
         if(nCubes >= 0) { // Not a multicube file
             this->_cubes.reserve(this->nCubes() + 1);
-            FOFCube *myCube = new FOFCube(this->_fortranFile);
+            FOFCube *myCube = new FOFCube(this->_fortranFile);            
             myCube->npart(nCubes);
             
             myCube->readCube(true, readParticles);
@@ -119,6 +119,30 @@ long FOFMultiCube::npart()
     }
     return npart;
 }
+
+/**
+ * Divide all cube npart
+ * @param divider
+ */
+void FOFMultiCube::divideNpart(int divider)
+{    
+    for(int i=0; i< this->nCubes(); i++) {
+        this->cubes(i)->divideNpart(divider);
+    }    
+}
+
+/**
+ * Force npart globally (reduce proportionnaly for each cube)
+ * @param npart
+ */
+void FOFMultiCube::npart(int npart)
+{    
+    float ratio = float(this->npart()) / (float) npart;    
+    for(int i=0; i< this->nCubes(); i++) {
+        this->cubes(i)->divideNpart(ratio);
+    }    
+}
+
 
 float FOFMultiCube::boundaries(int j)
 {

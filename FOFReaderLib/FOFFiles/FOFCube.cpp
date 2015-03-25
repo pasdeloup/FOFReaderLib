@@ -151,7 +151,7 @@ void FOFCube::readCube(bool skipNpart, int readParticles)
 // Open file and read cube (not multi)
 void FOFCube::readCubeFile(int readParticles)
 {       
-    this->_npart = this->openAndReadFirstInt();
+    this->_npart = this->_originalNpart = this->openAndReadFirstInt();
     if(npart() < 0) {
         throw std::ios_base::failure("ERROR : FOFCube multicube format");
     }

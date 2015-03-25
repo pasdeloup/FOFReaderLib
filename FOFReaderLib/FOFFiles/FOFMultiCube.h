@@ -38,7 +38,7 @@ public:
     int nCubes() {return _cubes.size(); }
     
     // Overload of Cube to read multicube like a giant cube
-    long npart();
+    long npart();    
     float boundaries(int i);
     float minX(void) {return boundaries(0);}
     float maxX(void) {return boundaries(1);}
@@ -50,10 +50,13 @@ public:
     void readMultiCubeFile(int readParticles = READ_POS | READ_VEL); // Check if dir and add
     void addMultiCubeFile(std::string filename, int readParticles = READ_POS | READ_VEL); // Open file and add cube (not multi)
     
+    void divideNpart(int divider = 8); // Divide all cube npart
+    void npart(int npart); // Force npart globally (reduce proportionnaly for each cube)
+        
 protected:    
     std::vector<FOFCube*> _cubes;
     float minBoundaries();
-    float maxBoundaries();
+    float maxBoundaries();    
 };
 
 #endif	/* FOFMULTICUBE_H */

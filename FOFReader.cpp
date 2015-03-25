@@ -37,6 +37,8 @@ int main(int argc, char** argv)
             int maxDetailCubeToDisplay = 2;
             
             FOFMultiCube multi(argv[1], FOFParticles::DONT_READ_PARTICLES); // don't use default, don't read particles just header
+            //multi.divideNpart(8); // Reduce nb part by 8
+            //multi.npart(10000); // Force npart to 1000
                         
             for(int i=0; i<multi.nCubes(); i++) {                            
                           
@@ -47,7 +49,8 @@ int main(int argc, char** argv)
                             << endl;       
                     
                if(i < maxDetailCubeToDisplay) {
-                    multi.cubes(i)->readParticles(FOFParticles::READ_ALL); // Need to read particles
+                    multi.cubes(i)->readParticles(FOFParticles::READ_ALL); // Need to read particles                    
+                                        
                     for(int j=0; j< min(maxParticleToDisplay,multi.cubes(i)->npart()); j++) {                    
                         cout << "   Particle " << j << ": "
                             << "id: " << multi.cubes(i)->id(j) << " "

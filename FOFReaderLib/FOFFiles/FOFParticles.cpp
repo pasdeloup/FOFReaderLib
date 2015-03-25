@@ -15,20 +15,23 @@
 /*////////////////////////////////////////////////////////////////////////////*/
 
 #include <vector>
+#include <algorithm>
 #include <math.h>
 
 #include "../FOFReaderLib.h"
 
 FOFParticles::FOFParticles()
 {
+    this->_npart = this->_originalNpart = 0;
 }
 
 FOFParticles::FOFParticles(FortranFile<unsigned int> *fortranFile)
-{
+{    
     this->_fortranFile = fortranFile;
     this->_filename = fortranFile->name();
     this->_fortranFileMaster = false;
-    this->_streampos = 0;
+    this->_streampos = 0;    
+    this->_npart = this->_originalNpart = 0;
 }
 
 /**
@@ -42,7 +45,7 @@ FOFParticles::FOFParticles(std::string filename, int npart, std::streamoff posit
 {
     this->_streampos = position;
     this->_filename = filename;
-    this->_npart = npart;
+    this->_npart = this->_originalNpart = npart;
     
     this->openAndReadFirstInt(); // just to check Endianness    
     this->readParticles(mode);    
@@ -63,7 +66,7 @@ FOFParticles::~FOFParticles()
  */
 void FOFParticles::readParticles(int mode, bool closefile)
 {
-    unsigned int len = this->_npart;
+    unsigned int len = this->_originalNpart;
 #ifdef FOF_DEBUG    
     std::cout << "Len = " << len << std::endl;
 #endif
@@ -124,7 +127,14 @@ void FOFParticles::readParticles(int mode, bool closefile)
     if(closefile) {
         this->_fortranFile->close();
     }    
+    
+    // If modified npart, remove randomly particles
+    if(this->_npart < this->_originalNpart) {
+        this->reduceNpart(this->_npart);
+    }
 }
+
+
 
 /**
  * Release particles to free memory (need to re-read if needed again)
@@ -216,4 +226,26 @@ void FOFParticles::removeParticleInInfinity()
     position.clear();
     velocity.clear();
     id.clear();
+}
+
+/**
+ * Reduce npart by removing randomly particles
+ * @param newNpart
+ */
+void FOFParticles::reduceNpart(int newNpart)
+{
+    if(newNpart >= this->_npart) { // Don't try to reduce if less particle than needed
+        return;
+    }
+    int toRemove = this->_npart - newNpart;
+    
+    std::vector<unsigned int> randomindex;
+    for (int i=0; i<this->_npart; ++i) randomindex.push_back(i);
+
+    std::random_shuffle ( randomindex.begin(), randomindex.end() );
+
+    for(int i=0; i<toRemove; i++) {
+        this->removeParticle(i, true);
+    }
+    this->removeParticleInInfinity();
 }

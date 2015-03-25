@@ -43,7 +43,7 @@ public:
     std::string getFilename() {return this->_filename;};
     
     // Setter
-    void npart(int npart) {this->_npart = npart;}    
+    void npart(int npart) {this->_npart = npart; if(this->_originalNpart == 0) {this->_originalNpart = npart;}}
     void setPos(int i, float x, float y, float z) { _position[i * 3] = x; _position[i * 3 + 1] = x; _position[i * 3 + 2] = x; }
                 
     // Enhanced getters
@@ -58,21 +58,26 @@ public:
     
     long long id(int i) {return _id[i];}
     
-// Reader    
+    // Reader    
     void setStreampos();
     void readParticles(int mode = READ_POS | READ_VEL, bool closefile = true); // Read particles, close file after by default
     void skipParticles();
     void releaseParticles(); // Remove particles to free memory
-    
+
+    // Manipulate data    
     void removeParticle(int i, bool virtually=false); // Remove a specific particle, if virtually=true: put it to infinity position
-    void removeParticleInInfinity(); // Remove physically particle put to infinity
+    void removeParticleInInfinity(); // Remove physically particle put to infinity    
+    void divideNpart(int divider = 8) {this->_npart = this->_npart / divider;} // Reduce npart using a ratio, 1/8 by default (=1024^3 -> 512^3 for instance)
+    void divideNpart(float divider = 8.0) {this->_npart = (int) this->_npart / divider;} // Reduce npart using a ratio, 1/8 by default (=1024^3 -> 512^3 for instance)
     
 protected:
-    int _npart;
+    int _originalNpart;
+    int _npart;    
     std::vector<float> _position;
     std::vector<float> _velocity;
     std::vector<long long> _id;  
     std::streamoff _streampos; // position of the start of particles in the file
+    void reduceNpart(int newNpart); // Reduce npart by removing randomly particles
 };
 
 #endif	/* FOFPARTICLES_H */
