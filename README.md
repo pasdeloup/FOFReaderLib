@@ -83,6 +83,14 @@ This simple object can only read files. For directories see DEUSGrav.
 
 See FOFReader.cpp as example, format 4.
 
+#### FOFExtrema
+
+Can read extrema files, ie minima/maxima calculted on a grid
+
+This simple object can only read files.
+
+See FOFReader.cpp as example, format 5.
+
 ### DeusSimulation
 
 DeusSimulation contains higher level tools based on FOFFiles.

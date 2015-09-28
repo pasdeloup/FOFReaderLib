@@ -8,6 +8,7 @@ SOURCES= FOFReaderLib/FOFFiles/FOFCube.cpp \
     FOFReaderLib/FOFFiles/FOFMultiCube.cpp \
     FOFReaderLib/FOFFiles/FOFParticles.cpp \
     FOFReaderLib/FOFFiles/FOFStrct.cpp \
+    FOFReaderLib/FOFFiles/FOFExtrema.cpp \
     FOFReaderLib/FOFFiles/FOFCubeGrav.cpp \
     FOFReaderLib/FOFFiles/FOFCubeGravLevel.cpp \
     FOFReaderLib/DEUSSimulation/DEUSHalos.cpp \

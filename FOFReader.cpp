@@ -37,7 +37,7 @@ int main(int argc, char** argv)
             int maxDetailCubeToDisplay = 2;
             
             FOFMultiCube multi(argv[1], FOFParticles::DONT_READ_PARTICLES); // don't use default, don't read particles just header
-            //multi.divideNpart(8); // Reduce nb part by 8
+            multi.divideNpart(8); // Reduce nb part by 8
             //multi.npart(10000); // Force npart to 1000
                         
             for(int i=0; i<multi.nCubes(); i++) {                            
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
                             << "position: (" << multi.cubes(i)->posX(j) << "," << multi.cubes(i)->posY(j) << "," << multi.cubes(i)->posZ(j) << ") "
                             << "velocity (" << multi.cubes(i)->velX(j) << "," << multi.cubes(i)->velY(j) << "," << multi.cubes(i)->velZ(j) << ")"
                             << endl;
-                    }  
+                    }   
                     if(multi.cubes(i)->npart() > maxParticleToDisplay ) {
                             cout << "   (...) " << endl;
                     }
@@ -198,6 +198,28 @@ int main(int argc, char** argv)
             break;
         }
         
+        /* 
+         * EXTREMA USAGE
+         */
+        case 5: 
+        {
+            cout << "Reading extrema " << argv[1] << endl;
+            FOFExtrema extrema(argv[1]);
+            cout << "OK" << endl;
+            cout << "Read " << extrema.nExtrema() << endl;
+            int maxExtremaToDisplay = 5;
+            //for(int i=52; i<54; i++) {
+            for(int i=0; i<min(maxExtremaToDisplay,extrema.nExtrema()); i++) {
+                cout << "EXTREMUM " << i << ": " 
+                        << "density:" << extrema.extremum(i)->density() << " "                        
+                        << "seuil min:" << extrema.extremum(i)->minSeuil() << " avg: " << extrema.extremum(i)->avgSeuil()
+                        << " center: (" << extrema.extremum(i)->x() << "," << extrema.extremum(i)->y() << "," << extrema.extremum(i)->z() << ") "
+                        << endl;
+            }   
+             cout << "TOTAL " << extrema.nExtrema() << " extrema" << endl;
+            break;
+        }
+        
         /*
          * UNKNOWN FORMAT
          */
@@ -217,6 +239,7 @@ int main(int argc, char** argv)
                 "        2: FOF Masst\r\n"
                 "        3: DEUS Halo directory (= masst + strct)\r\n"
                 "        4: FOF Grav cube \r\n"
+                "        5: FOF Extrema \r\n"
                 << argc << endl;
         return 0;
     }
