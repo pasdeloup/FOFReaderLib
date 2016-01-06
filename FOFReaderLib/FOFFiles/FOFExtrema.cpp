@@ -46,13 +46,9 @@ void FOFExtrema::readExtremaFile() // Open file and read masst
     }
     else {
         std::vector<float> temp;
-        this->_nExtrema = this->openAndReadFirstInt();
         
-        #ifdef FOF_DEBUG    
-            std::cout << "Found " << this->_nExtrema << " to read..." <<  std::endl;
-        #endif
-
-        // Get endianess        
+        this->_nExtrema = this->openAndReadFirstInt();
+    
         temp.reserve(this->_nExtrema * 6);
         this->_extrema.reserve(this->_nExtrema);
         

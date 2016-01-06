@@ -20,10 +20,10 @@
 // Switch to make FOFReaderLib verbose: 
 //   display Big Endian mode
 //   display unreadable files when reading directories
-#define FOF_VERBOSE   
+//#define FOF_VERBOSE   
 
 // Switch to Debug mode, add a lot of notifications when running
-#define FOF_DEBUG
+//#define FOF_DEBUG
 
 #include "FOFFiles/FOFFile.h"
 #include "FOFFiles/FOFCube.h"
@@ -34,6 +34,7 @@
 #include "FOFFiles/FOFExtremum.h"
 #include "FOFFiles/FOFExtrema.h"
 #include "FOFFiles/FOFCubeGrav.h"
+#include "DEUSSimulation/DEUSProfile.h"
 #include "DEUSSimulation/DEUSHalos.h"
 #include "DEUSSimulation/DEUSCubes.h"
 #include "DEUSSimulation/DEUSGrav.h"

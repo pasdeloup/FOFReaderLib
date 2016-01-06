@@ -87,7 +87,7 @@ See FOFReader.cpp as example, format 4.
 
 Can read extrema files, ie minima/maxima calculted on a grid
 
-This simple object can only read files.
+This object can read files or directories. For directories, only read filename containing "extrema" text.
 
 See FOFReader.cpp as example, format 5.
 

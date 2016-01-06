@@ -43,7 +43,7 @@ FOFCube::FOFCube(const FOFCube& orig)
 
 FOFCube::FOFCube(int npart, int generator)
 {
-    this->_npart = npart;
+    this->_npart = this->_originalNpart = npart;
     
     this->_position.resize(npart * 3);
     this->_velocity.resize(npart * 3);
@@ -132,6 +132,7 @@ void FOFCube::readCube(bool skipNpart, int readParticles)
     
     if(not skipNpart) {        
         this->_fortranFile->read(this->_npart);
+        this->_originalNpart = this->_npart;
     }
     
     this->_fortranFile->read(this->_procid);                    
