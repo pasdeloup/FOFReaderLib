@@ -15,6 +15,7 @@
 /*////////////////////////////////////////////////////////////////////////////*/
 
 #include <cmath>
+#include <iomanip>
 
 #include "FOFReaderLib/FOFReaderLib.h"
 #include "convert_cosmos.h"
@@ -63,6 +64,7 @@ int main(int argc, char** argv)
                 
                 myfile 
                         << line_start
+                        //<< setprecision(6) // Default to 6 as it is the safe value for single precision float
                         << masst.halos(i)->id() << row_separator
                         << masst.halos(i)->x() << row_separator
                         << masst.halos(i)->y() << row_separator
